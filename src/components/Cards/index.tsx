@@ -14,19 +14,19 @@ const CardList: CardItem[] = [
   {
     title: "Modelling your Data",
     image: "/images/cards/card_nori.png",
-    alt: "Modelling with NORI",
+    alt: "Modelling with Nori",
     to: "/concepts",
   },
   {
     title: "Capturing and Linking Content",
     image: "/images/cards/card_cami.png",
-    alt: "Capturing with CAMI and AWEN",
+    alt: "Capturing with Miso and Tori",
     to: "/concepts",
   },
   {
     title: "Publishing Digital Editions",
     image: "/images/cards/card_ora.png",
-    alt: "Publishing with ORA",
+    alt: "Publishing with Shoyu",
     to: "/concepts",
   },
 ];

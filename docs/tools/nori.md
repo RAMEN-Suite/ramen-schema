@@ -1,7 +1,7 @@
 ---
-title: NORI – Project Modelling
-description: Create your own RAMEN-based project models with NORI.
+title: Nori – Project Modelling
+description: Create your own RAMEN-based project models with Nori.
 slug: /tools/nori
 ---
 
-# NORI – Project Modelling
+# Nori – Project Modelling

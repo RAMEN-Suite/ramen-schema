@@ -19,7 +19,7 @@ const sidebars: SidebarsConfig = {
         type: "generated-index",
         slug: "/tools",
       },
-      items: ["tools/nori", "tools/cami", "tools/awen", "tools/ora"],
+      items: ["tools/nori", "tools/miso", "tools/tori", "tools/shoyu"],
     },
     "examples",
     "publications",
