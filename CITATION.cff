@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use RAMEN, please cite the model using these metadata."
+title: "RAMEN: Reusable Abstraction Model for Editorial Needs"
+type: software
+abstract: "A reusable conceptual model for structuring heterogeneous data in digital scholarly editions."
+authors:
+  - family-names: Enns
+    given-names: Sebastian
+    email: mail@sebenns.com
+  - family-names: Kuczera
+    given-names: Andreas
+    email: andreas.kuczera@mni.thm.de
+url: "https://ramen-schema.org/"
+repository-code: "https://github.com/RAMEN-Suite/RAMEN-Schema"
+license: CC-BY-4.0

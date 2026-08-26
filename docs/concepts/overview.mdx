@@ -8,7 +8,7 @@ import Figure, { FigRef } from "@site/src/components/Figure";
 
 # RAMEN – not just a noodle soup?
 
-The _Reusable Abstraction Model for Editorial Needs_ (RAMEN) is a conceptual model for **creating, connecting, and publishing editorial data**. It describes how source materials, annotations, entities, collections, and contextual structures can be organised as parts of a [digital edition](https://de.wikipedia.org/wiki/Digitale_Edition) – a structured, critical representation of edited material ([cf. Sahle 2016](http://www.jstor.org/stable/j.ctt1fzhh6v.6)).
+The _Reusable Abstraction Model for Editorial Needs_ (RAMEN) is a reusable conceptual model for **structuring heterogeneous data in digital scholarly editions**. It organises sources, annotations, entities, collections, and their relationships within a shared model. This structure supports tools for modelling, capturing, connecting, and publishing editorial data.
 
 RAMEN **does not replace** established standards such as [TEI](https://tei-c.org/) or [IIIF](https://iiif.io/), nor broader models for cultural heritage knowledge, semantic relations, or research data. It provides an _editorial layer_ in which such standards and models can be **incorporated** where useful. RAMEN starts from the practical needs of editorial projects. It helps projects define _which materials they work with_, _how these materials can be structured_, _where annotations express scholarly interpretation_, _which entities are relevant_, and _how these elements are connected_. The aim is not to prescribe one fixed model for all editions, but to provide a **reusable abstraction** that serves as the **conceptual foundation** for [tools](/tools) that model, capture, link, and publish editorial data.
 
@@ -50,7 +50,6 @@ RAMEN is designed as a reusable abstraction, not as a fixed model that every pro
 :::info
 _Refinement_ means **specialising** the shared RAMEN model **through inheritance**. A refined concept keeps its RAMEN base type and adds a more specific project-level type: a `Letter` refined from `Collection` is both a `Collection` and a `Letter`, so tools can use both the general RAMEN type and the specialised project type.
 
-The formal rules for refinement, inheritance, constraints, and validation are described in the [Specification](/specification).
 :::
 
 <Figure
@@ -77,13 +76,21 @@ They should become separate `Collection` or `Content` nodes only when they need 
 
 The relation types themselves cannot be refined. `PART_OF`, `HAS_ANNOTATION`, and `REFERS_TO` remain the fixed association types of RAMEN. A project model can, however, **restrict** where these relations may be used. If `Witness` is modelled as `PART_OF` `Letter`, this does not automatically allow `Witness` to be `PART_OF` any other `Collection` subtype. Missing relations cannot be used _unless they are explicitly defined in the project model_. Projects may add their own relation types, but RAMEN-based tools cannot handle them automatically unless they are explicitly implemented or mapped to RAMEN-compatible behaviour.
 
-Some of these concepts also apply to node attributes. A refined concept keeps the attributes of its RAMEN base type, but can add project-specific attributes where needed. The formal attribute model is described in the [Specification](/specification).
+Some of these concepts also apply to node attributes. A refined concept keeps the attributes of its RAMEN base type, but can add project-specific attributes where needed.
 
 ### Project Modelling with Nori
 
 Project-specific RAMEN models can be created with [Nori](/tools/nori). The tool stores refined node types, allowed relations, attributes, and constraints in a JSON-based model specification that can be used by other RAMEN tools.
 
-See [Nori](/tools/nori) for the modelling tool and the [Specification](/specification) for the technical model format.
+See [Nori](/tools/nori) for the modelling tool.
+
+## Terminology
+
+- **RAMEN** is the conceptual model itself.
+- **RAMEN Schema** is this documentation, specification, and source repository.
+- A **RAMEN project model** specialises RAMEN node types, defines their attributes, and restricts the relations allowed in a particular editorial project.
+- A **refinement** is a project-specific node type that inherits from one of the four RAMEN node types. Relations are restricted or extended, but the three fundamental RAMEN relation types are not refined.
+- **RAMEN-based** describes tools, project models, and datasets that implement or explicitly map to the RAMEN concepts.
 
 ## Explore the Model Areas
 

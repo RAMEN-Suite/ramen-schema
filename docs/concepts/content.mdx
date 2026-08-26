@@ -154,7 +154,7 @@ Alternatively, a refined `Content` node may reference an existing TEI/XML docume
 
 #### Graph-Serialised Text with ATAG
 
-Some workflows need more granular text structures than a single `text` attribute can provide. In such cases, RAMEN can be combined with a graph-based text serialisation such as _Applied Text as Graph_ (ATAG) ([cf. Kuczera 2024](https://doi.org/10.4000/14vyl)). ATAG can represent a text as a **chain of character or token nodes**, so that very small textual units become **directly addressable** for editing, annotation, citation, or computational processing.
+Some workflows need more granular text structures than a single `text` attribute can provide. In such cases, _Applied Text as Graph_ (ATAG) provides a RAMEN-compatible graph serialisation for the internal structure of textual content ([cf. Kuczera 2025](https://doi.org/10.4000/14vyl)). ATAG can represent a text as a **chain of character or token nodes**, so that very small textual units become **directly addressable** for editing, annotation, citation, or computational processing.
 
 <Figure
   id="fig:atag"
@@ -165,4 +165,4 @@ Some workflows need more granular text structures than a single `text` attribute
   width={450}
 />
 
-In this pattern, the RAMEN `Content` node remains the **content-bearing entry point** for the project model. The ATAG structure provides a more detailed internal representation of the text. Relations such as `STANDOFF_START` and `STANDOFF_END` belong to this granular serialisation, while RAMEN tools can rely on the `Content` node and `HAS_ANNOTATION` relation at the model level.
+In this pattern, the RAMEN `Content` node remains the **content-bearing entry point** for the project model. ATAG specialises the content layer with a more detailed internal representation of the text. Relations such as `STANDOFF_START` and `STANDOFF_END` belong to the ATAG serialisation, while RAMEN-based tools can rely on the `Content` node and `HAS_ANNOTATION` relation at the shared model level.

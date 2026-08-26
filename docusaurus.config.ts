@@ -49,7 +49,7 @@ const config: Config = {
       {
         name: "description",
         content:
-          "RAMEN Schema documents the Reusable Abstraction Model for Editorial Needs, a conceptual model for structuring content, annotations, entities, collections, and relations in digital scholarly editing.",
+          "RAMEN Schema documents the Reusable Abstraction Model for Editorial Needs, a reusable conceptual model for structuring heterogeneous data in digital scholarly editions.",
       },
       {
         name: "keywords",
@@ -66,7 +66,7 @@ const config: Config = {
 
     navbar: {
       logo: {
-        alt: "RAMEN SCHEMA",
+        alt: "RAMEN Schema",
         src: "images/logo.svg",
       },
       items: [
@@ -141,6 +141,10 @@ const config: Config = {
         {
           title: "Recipes and More",
           items: [
+            {
+              label: "Citation",
+              to: "/citation",
+            },
             {
               label: "Publications",
               to: "/publications",

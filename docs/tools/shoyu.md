@@ -1,7 +1,7 @@
 ---
-title: Shoyu – Graph-based Publication
-description: Create Graph-based Digital Editions based on RAMEN with Shoyu.
+title: Shoyu – Graph-Based Publication
+description: Create graph-based digital scholarly editions based on RAMEN with Shoyu.
 slug: /tools/shoyu
 ---
 
-# Shoyu – Graph-based Publication
+# Shoyu – Graph-Based Publication

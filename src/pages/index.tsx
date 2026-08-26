@@ -11,10 +11,10 @@ function HomepageHeader(): ReactElement {
     <header className={clsx("hero hero--primary hero-banner")}>
       <div className="container">
         <Heading as="h1" className="hero__title">
-          RAMEN SCHEMA
+          RAMEN Schema
         </Heading>
 
-        <p className="hero__subtitle">Model, Capture and Publish Digital Scholarly Data</p>
+        <p className="hero__subtitle">Structure, Connect, and Publish Digital Scholarly Data</p>
 
         <div className="button-row">
           <Link className="button button--secondary button--lg" to="/concepts">
