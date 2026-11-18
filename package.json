@@ -18,7 +18,8 @@
     "typecheck": "tsc",
     "format": "prettier --check src",
     "format:fix": "prettier --write src",
-    "deploy:pages": "npm run build"
+    "deploy:pages": "npm run build",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@docusaurus/core": "^3.10.2",
@@ -31,6 +32,8 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
     "@docusaurus/module-type-aliases": "^3.10.2",
     "@docusaurus/tsconfig": "^3.10.2",
     "@docusaurus/types": "^3.10.2",
