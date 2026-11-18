@@ -6,7 +6,7 @@ Documentation website for **RAMEN** — the _Reusable Abstraction Model for Edit
 
 RAMEN is a reusable conceptual model for structuring heterogeneous data in digital scholarly editions. It organises sources, annotations, entities, collections, and their relationships within a shared model. This structure supports tools for modelling, capturing, connecting, and publishing editorial data.
 
-**RAMEN Schema** is the documentation, specification, and source repository for the model. It is intended for researchers, editors, developers, and Digital Humanities projects that work with structured editorial data.
+**RAMEN Schema** documents the conceptual model and publishes the machine-readable specifications supplied by [RAMEN Core](https://github.com/RAMEN-Suite/ramen-core). It is intended for researchers, editors, developers, and Digital Humanities projects that work with structured editorial data.
 
 The site is built with [Docusaurus](https://docusaurus.io/).
 
@@ -29,7 +29,7 @@ Machine-readable citation metadata is available in [`CITATION.cff`](./CITATION.c
 
 ### Requirements
 
-- Node.js `>=20`
+- Node.js `>=22.18.0`
 - npm
 
 Check your local versions:
@@ -42,7 +42,7 @@ npm --version
 Install dependencies:
 
 ```bash
-npm install
+npm ci
 ```
 
 ## Usage
@@ -88,7 +88,7 @@ cd <repository-name>
 Install dependencies:
 
 ```bash
-npm install
+npm ci
 ```
 
 Start local development:
@@ -115,6 +115,12 @@ The generated static site is written to:
 build/
 ```
 
+## Publishing specifications
+
+`npm start` and `npm run build` automatically run `npm run schemas:export`. The script reads the JSON schemas bundled with the locked version of `@ramen-suite/core` and copies each file byte for byte to the path declared by its `$id` on `https://ramen-schema.org`. It also writes the reference model exported by Core and generates the catalogue for the Specification page.
+
+GitHub Actions runs the production build and publishes the full `build/` directory to GitHub Pages. To update Core, run `npm install --save-dev --save-exact @ramen-suite/core@<version>` and commit both package files. If a new format supersedes a published `$id`, keep the previously published JSON at its original path under `static/`.
+
 ## Project Structure
 
 ```text
@@ -130,13 +136,13 @@ build/
 
 ## License
 
-The RAMEN model, machine-readable schema files, documentation content, website text, diagrams, and conceptual explanations in this repository are licensed under the
+The documentation content, website text, diagrams, and conceptual explanations in this repository are licensed under the
 [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/).
 
 Website source code, configuration files, scripts, and build-related project files are licensed under the
 [Apache License 2.0](./LICENSE).
 
-The official RAMEN specification is defined by releases published by the RAMEN project contributors. Forks and adaptations are welcome, but should identify themselves as derived versions unless accepted into an official release.
+The published JSON schemas and reference model are supplied by the MIT-licensed RAMEN Core package.
 
 ## Maintainers / Contact
 

@@ -6,6 +6,7 @@ const config: Config = {
   title: "RAMEN Schema",
   tagline: "Reusable Abstraction Model for Editorial Needs",
   favicon: "images/favicon.png",
+  staticDirectories: ["static", ".generated/static"],
 
   future: {
     v4: true,
@@ -19,7 +20,7 @@ const config: Config = {
   projectName: "RAMEN-Schema",
 
   onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  markdown: { hooks: { onBrokenMarkdownLinks: "warn" } },
 
   i18n: {
     defaultLocale: "en",

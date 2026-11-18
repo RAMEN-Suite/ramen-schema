@@ -9,7 +9,10 @@
   },
   "private": true,
   "scripts": {
+    "schemas:export": "node scripts/export-specifications.mjs",
+    "prestart": "npm run schemas:export",
     "start": "docusaurus start",
+    "prebuild": "npm run schemas:export",
     "build": "docusaurus build",
     "serve": "docusaurus serve",
     "typecheck": "tsc",
@@ -31,6 +34,7 @@
     "@docusaurus/module-type-aliases": "^3.10.2",
     "@docusaurus/tsconfig": "^3.10.2",
     "@docusaurus/types": "^3.10.2",
+    "@ramen-suite/core": "0.1.0",
     "@types/react": "^19.0.0",
     "prettier": "^3.8.4",
     "typescript": "~6.0.2"
@@ -48,6 +52,6 @@
     ]
   },
   "engines": {
-    "node": ">=20.0"
+    "node": ">=22.18.0"
   }
 }
