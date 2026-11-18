@@ -5,8 +5,14 @@ import type * as Preset from "@docusaurus/preset-classic";
 const config: Config = {
   title: "RAMEN Schema",
   tagline: "Reusable Abstraction Model for Editorial Needs",
-  favicon: "images/favicon.png",
+  favicon: "images/schema-favicon.svg",
   staticDirectories: ["static", ".generated/static"],
+  headTags: [
+    {
+      tagName: "link",
+      attributes: { rel: "preload", href: "/fonts/RobotoFlex.ttf", as: "font", type: "font/ttf", crossorigin: "anonymous" },
+    },
+  ],
 
   future: {
     v4: true,
@@ -66,9 +72,10 @@ const config: Config = {
     },
 
     navbar: {
+      title: "RAMEN\nSCHEMA",
       logo: {
-        alt: "RAMEN Schema",
-        src: "images/logo.svg",
+        alt: "",
+        src: "images/logo-worn.svg",
       },
       items: [
         {
@@ -97,9 +104,16 @@ const config: Config = {
           label: "Publications",
         },
         {
+          href: "https://www.npmjs.com/package/@ramen-suite/core",
+          position: "right",
+          className: "header-icon-link header-npm-link",
+          "aria-label": "RAMEN Core on npm",
+          title: "RAMEN Core on npm",
+        },
+        {
           href: "https://github.com/RAMEN-Suite",
           position: "right",
-          className: "header-github-link",
+          className: "header-icon-link header-github-link",
           "aria-label": "GitHub repository",
         },
       ],
@@ -109,51 +123,38 @@ const config: Config = {
       style: "dark",
       links: [
         {
-          title: "RAMEN Schema",
+          title: "Model",
           items: [
-            {
-              label: "Specification",
-              to: "/specification",
-            },
-            {
-              label: "Concepts",
-              to: "/concepts",
-            },
-            {
-              label: "Examples",
-              to: "/examples",
-            },
+            { label: "RAMEN concepts", to: "/concepts" },
+            { label: "Model specification", to: "/specification" },
+            { label: "RAMEN Core on npm", href: "https://www.npmjs.com/package/@ramen-suite/core" },
           ],
         },
         {
-          title: "Builds on RAMEN",
+          title: "RAMEN Suite",
           items: [
-            {
-              label: "Existing Tools",
-              to: "/tools",
-            },
-            {
-              label: "RAMEN Suite",
-              href: "https://github.com/RAMEN-Suite",
-            },
+            { label: "Model with Nori", to: "/tools/nori" },
+            { label: "Annotate with Miso", to: "/tools/miso" },
+            { label: "Publish with Shoyu", to: "/tools/shoyu" },
           ],
         },
-        {},
         {
-          title: "Recipes and More",
+          title: "Cite & Connect",
+          items: [
+            { label: "How to cite RAMEN", to: "/citation" },
+            { label: "RAMEN Suite on GitHub", href: "https://github.com/RAMEN-Suite" },
+          ],
+        },
+        {
+          className: "footer__brand",
           items: [
             {
-              label: "Citation",
-              to: "/citation",
-            },
-            {
-              label: "Publications",
-              to: "/publications",
+              html: '<img class="footer__brand-mark" src="/images/logo-worn-white.svg" alt="" width="128" height="99" />',
             },
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} Reusable Abstraction Model for Editorial Needs`,
+      copyright: `© ${new Date().getFullYear()} RAMEN Schema`,
     },
 
     prism: {

@@ -1,45 +1,36 @@
-import type { ReactElement, ReactNode } from "react";
-import clsx from "clsx";
+import type { ReactNode } from "react";
 import Link from "@docusaurus/Link";
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
 import Cards from "../components/Cards";
-
-function HomepageHeader(): ReactElement {
-  return (
-    <header className={clsx("hero hero--primary hero-banner")}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          RAMEN Schema
-        </Heading>
-
-        <p className="hero__subtitle">Structure, Connect, and Publish Digital Scholarly Data</p>
-
-        <div className="button-row">
-          <Link className="button button--secondary button--lg" to="/concepts">
-            What is RAMEN?
-          </Link>
-          <Link className="button button--secondary button--lg" to="/specification">
-            Specification
-          </Link>
-          <Link className="button button--secondary button--lg" to="/tools">
-            RAMEN Tools
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
+import styles from "./index.module.css";
 
 export default function Home(): ReactNode {
-  const { siteConfig } = useDocusaurusContext();
-
   return (
-    <Layout title={siteConfig.title} description={siteConfig.tagline}>
-      <HomepageHeader />
-
+    <Layout description="RAMEN Schema connects collections, content, annotations, and entities in digital scholarly editions.">
       <main>
+        <header className={`hero-banner ${styles.hero}`}>
+          <div className="container">
+            <Heading as="h1" className={styles.title}>
+              RAMEN Schema
+            </Heading>
+            <p className={styles.subtitle}>Structure, Connect, and Publish Digital Scholarly Data</p>
+            <p className={styles.description}>
+              RAMEN is a shared model for connecting sources, collections, annotations, and entities in digital research projects.
+            </p>
+            <div className={styles.actions}>
+              <Link className="button button--secondary" to="/concepts">
+                What is RAMEN?
+              </Link>
+              <Link className="button button--secondary" to="/specification">
+                Specification
+              </Link>
+              <Link className="button button--secondary" to="/tools">
+                RAMEN Tools
+              </Link>
+            </div>
+          </div>
+        </header>
         <Cards />
       </main>
     </Layout>

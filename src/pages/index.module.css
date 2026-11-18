@@ -1,0 +1,109 @@
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 4.7vw, 4.5rem);
+  border-bottom: 1px solid var(--ramen-border-muted);
+  background: var(--ramen-bg);
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  color: var(--ramen-ink);
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  letter-spacing: 0.015em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  max-width: 42ch;
+  margin: 1rem auto 0;
+  color: var(--ramen-text-muted);
+  font-size: clamp(1.03rem, 1.8vw, 1.3rem);
+  text-wrap: balance;
+}
+
+.description {
+  max-width: 62ch;
+  margin: 0.625rem auto 0;
+  color: var(--ramen-text-muted);
+  font-size: 0.95rem;
+  text-wrap: balance;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.625rem;
+  max-width: 33rem;
+  margin: 1.5rem auto 0;
+}
+
+.actions a {
+  display: grid;
+  place-items: center;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--ramen-radius-md);
+  font-size: 0.875rem;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.actions :global(.button--secondary) {
+  background: var(--ramen-surface);
+}
+
+.actions :global(.button--secondary):hover {
+  color: var(--ramen-red);
+  background: var(--ramen-selection);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .title {
+    animation: hero-fade-up 620ms ease-out backwards;
+  }
+
+  .actions {
+    animation: hero-fade-up 700ms 180ms ease-out backwards;
+  }
+
+  .subtitle,
+  .description {
+    animation: hero-fade-up 760ms 360ms ease-out backwards;
+  }
+
+  .actions:focus-within {
+    animation: none;
+  }
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(var(--ramen-animation-distance));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 440px) {
+  .actions {
+    grid-template-columns: 1fr;
+    max-width: 15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before,
+  .hero::after,
+  .hero :global(.container)::before,
+  .hero :global(.container)::after {
+    animation: none;
+  }
+}

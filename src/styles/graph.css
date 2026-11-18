@@ -8,7 +8,7 @@
   left: 0;
   z-index: -3;
   width: min(40vw, 38rem);
-  opacity: 0.34;
+  opacity: 0.47;
   pointer-events: none;
   background:
     radial-gradient(circle at 10% 18%, var(--ramen-red) 0 0.24rem, transparent 0.29rem),
@@ -59,7 +59,9 @@
     0 0,
     0 0;
   mask-image: linear-gradient(to right, black 0%, black 42%, transparent 100%);
-  animation: graph-field-left 34s ease-in-out infinite alternate;
+  animation:
+    graph-field-left 34s ease-in-out infinite alternate,
+    graph-appear 760ms 360ms ease-out backwards;
 }
 
 .hero-banner::after {
@@ -70,7 +72,7 @@
   bottom: -18%;
   z-index: -3;
   width: min(40vw, 38rem);
-  opacity: 0.34;
+  opacity: 0.47;
   pointer-events: none;
   background:
     radial-gradient(circle at 90% 16%, var(--ramen-red) 0 0.24rem, transparent 0.29rem),
@@ -121,7 +123,9 @@
     0 0,
     0 0;
   mask-image: linear-gradient(to left, black 0%, black 42%, transparent 100%);
-  animation: graph-field-right 34s ease-in-out infinite alternate;
+  animation:
+    graph-field-right 34s ease-in-out infinite alternate,
+    graph-appear 760ms 360ms ease-out backwards;
 }
 
 .hero-banner .container::before,
@@ -131,7 +135,7 @@
   z-index: -1;
   width: 15rem;
   height: 12rem;
-  opacity: 0.36;
+  opacity: 0.46;
   pointer-events: none;
   background:
     linear-gradient(24deg, transparent 0 31%, rgba(24, 20, 19, 0.24) 31.2% 31.8%, transparent 32%),
@@ -149,14 +153,18 @@
   top: -3rem;
   left: -12rem;
   transform: rotate(-10deg);
-  animation: graph-cluster-left 7s ease-in-out infinite alternate;
+  animation:
+    graph-cluster-left 7s ease-in-out infinite alternate,
+    graph-appear 760ms 360ms ease-out backwards;
 }
 
 .hero-banner .container::after {
   right: -12rem;
   bottom: -3.5rem;
   transform: rotate(10deg) scaleX(-1);
-  animation: graph-cluster-right 8s ease-in-out infinite alternate;
+  animation:
+    graph-cluster-right 8s ease-in-out infinite alternate,
+    graph-appear 760ms 360ms ease-out backwards;
 }
 
 @keyframes graph-field-left {
@@ -242,24 +250,24 @@
 @keyframes graph-cluster-left {
   from {
     transform: translate3d(0, 0, 0) rotate(-10deg);
-    opacity: 0.24;
+    opacity: 0.34;
   }
 
   to {
     transform: translate3d(0.75rem, 0.45rem, 0) rotate(-6deg);
-    opacity: 0.42;
+    opacity: 0.52;
   }
 }
 
 @keyframes graph-cluster-right {
   from {
     transform: translate3d(0, 0, 0) rotate(10deg) scaleX(-1);
-    opacity: 0.24;
+    opacity: 0.34;
   }
 
   to {
     transform: translate3d(-0.75rem, -0.45rem, 0) rotate(6deg) scaleX(-1);
-    opacity: 0.42;
+    opacity: 0.52;
   }
 }
 
@@ -267,14 +275,14 @@
   .hero-banner::before,
   .hero-banner::after {
     width: 42vw;
-    opacity: 0.22;
+    opacity: 0.3;
   }
 
   .hero-banner .container::before,
   .hero-banner .container::after {
     width: 10rem;
     height: 8rem;
-    opacity: 0.22;
+    opacity: 0.3;
   }
 
   .hero-banner .container::before {
@@ -290,7 +298,7 @@
   .hero-banner::before,
   .hero-banner::after {
     width: 34vw;
-    opacity: 0.14;
+    opacity: 0.19;
   }
 
   .hero-banner .container::before,
@@ -303,6 +311,16 @@
   .hero-banner::before,
   .hero-banner::after {
     width: 30vw;
-    opacity: 0.1;
+    opacity: 0.14;
+  }
+}
+
+@keyframes graph-appear {
+  from {
+    filter: opacity(0);
+  }
+
+  to {
+    filter: opacity(1);
   }
 }

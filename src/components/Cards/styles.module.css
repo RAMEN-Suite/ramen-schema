@@ -1,6 +1,5 @@
 .cards {
-  width: 100%;
-  padding: 4rem 0;
+  padding: clamp(3rem, 6vw, 5rem) 0;
 }
 
 .grid {
@@ -15,16 +14,14 @@
   height: 100%;
   overflow: hidden;
   color: inherit;
-  text-align: center;
   text-decoration: none;
   background: var(--ramen-surface);
-  border: 1px solid var(--ramen-border);
+  border: 1px solid var(--ramen-border-muted);
   border-radius: var(--ramen-radius-md);
   cursor: pointer;
   transition:
     border-color var(--ramen-transition-fast),
     transform var(--ramen-transition-fast);
-  animation: ramen-fade-up 520ms ease-out both;
 }
 
 .card:hover,
@@ -48,8 +45,8 @@
 .imageWrap {
   width: 100%;
   overflow: hidden;
-  background: rgba(164, 31, 30, 0.04);
-  border-bottom: 1px solid var(--ramen-border);
+  background: var(--ramen-surface-muted);
+  border-bottom: 1px solid var(--ramen-border-muted);
   aspect-ratio: 3 / 2;
 }
 
@@ -60,28 +57,34 @@
   object-fit: cover;
 }
 
+.copy {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 1.125rem 1.25rem 1.25rem;
+  font-family: var(--ifm-font-family-base);
+}
+
 .title {
   margin: 0;
-  padding: 1.25rem 1rem 1.35rem;
-  color: var(--ramen-text);
-  font-size: 1.35rem;
-  letter-spacing: -0.025em;
-  text-decoration: none;
+  color: var(--ramen-ink);
+  font-family: inherit;
+  font-size: clamp(0.94rem, 1.3vw, 1.1rem);
+  font-weight: 750;
+  line-height: 1.25;
+  text-wrap: balance;
 }
 
-.card:hover .title,
-.card:focus .title,
-.card:active .title,
-.card:visited .title {
-  color: var(--ramen-text);
-  text-decoration: none;
+.description {
+  margin: 0;
+  color: var(--ramen-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.45;
+  text-wrap: pretty;
 }
 
-@media (max-width: 996px) {
-  .cards {
-    padding: 3rem 0;
-  }
-
+@media (max-width: 760px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;

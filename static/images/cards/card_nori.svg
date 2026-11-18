@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 600 400">
+  <title>Modelling a text annotation in Nori</title>
+  <desc>A pointer highlights an Annotation node. Text has that annotation and is part of a Witness, which the annotation refers to.</desc>
+  <defs>
+    <pattern id="grid" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="7" r="0.85" fill="#d9d9dd"/>
+    </pattern>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 9 5 1 9Z" fill="#62636c"/>
+    </marker>
+    <marker id="highlight-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 9 5 1 9Z" fill="#7a0712"/>
+    </marker>
+  </defs>
+
+  <path fill="#f4f4f5" d="M0 0h600v400H0z"/>
+  <path fill="url(#grid)" d="M0 0h600v400H0z"/>
+
+  <g fill="none" stroke-width="2">
+    <path d="M386 111C292 111 307 190 211 190" stroke="#7a0712" marker-end="url(#highlight-arrow)"/>
+    <path d="M211 221C301 221 302 301 385 301" stroke="#85858d" marker-end="url(#arrow)"/>
+    <path d="M468 143V271" stroke="#85858d" marker-end="url(#arrow)"/>
+  </g>
+
+  <g font-family="Roboto Flex, system-ui, sans-serif" text-anchor="middle">
+    <g font-size="13" font-weight="650">
+      <rect x="223" y="124" width="136" height="25" rx="5" fill="#faeeef" stroke="#e9cfd2"/>
+      <text x="291" y="141" fill="#7a0712">HAS_ANNOTATION</text>
+      <rect x="245" y="252" width="94" height="24" rx="5" fill="#f4f4f5"/>
+      <text x="292" y="268" fill="#41424b">REFERS_TO</text>
+      <rect x="479" y="195" width="71" height="24" rx="5" fill="#f4f4f5"/>
+      <text x="514" y="211" fill="#41424b">PART_OF</text>
+    </g>
+
+    <rect x="43" y="164" width="172" height="82" rx="12" fill="#7a0712" opacity=".08"/>
+    <rect x="49" y="170" width="160" height="70" rx="7" fill="#fff8f1" stroke="#c47637" stroke-width="2"/>
+    <rect x="386" y="73" width="164" height="70" rx="7" fill="#f7faf4" stroke="#8ead7e" stroke-width="1.5"/>
+    <rect x="386" y="272" width="164" height="70" rx="7" fill="#f3f8fc" stroke="#78aace" stroke-width="1.5"/>
+
+    <g fill="#0b0d16" font-size="20" font-weight="700">
+      <text x="129" y="201">Annotation</text>
+      <text x="468" y="104">Text</text>
+      <text x="468" y="303">Witness</text>
+    </g>
+    <g fill="#52525b" font-size="14">
+      <text x="129" y="223">Refines Annotation</text>
+      <text x="468" y="126">Refines Content</text>
+      <text x="468" y="325">Refines Collection</text>
+    </g>
+  </g>
+
+  <g transform="translate(184 230)">
+    <path d="M1 1 5 37l9-10 8 15 7-4-8-15 13-1Z" fill="#0b0d16" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/>
+  </g>
+</svg>

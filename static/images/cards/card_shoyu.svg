@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 600 400">
+  <title>A published digital edition in Shoyu</title>
+  <desc>The published Antje Brons correspondence shows a letter, a linked person and a graph of related records.</desc>
+  <defs>
+    <pattern id="grid" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="7" r=".85" fill="#d9d9dd"/>
+    </pattern>
+  </defs>
+  <path fill="#f4f4f5" d="M0 0h600v400H0z"/>
+  <path fill="url(#grid)" d="M0 0h600v400H0z"/>
+
+  <g font-family="Roboto Flex, system-ui, sans-serif">
+    <rect x="28" y="46" width="544" height="306" rx="9" fill="#fff" stroke="#d9d9dd" stroke-width="1.5"/>
+    <path d="M37 46h526a9 9 0 0 1 9 9v31H28V55a9 9 0 0 1 9-9Z" fill="#edeef0"/>
+    <g fill="#999aa2">
+      <circle cx="45" cy="66" r="3"/>
+      <circle cx="57" cy="66" r="3"/>
+      <circle cx="69" cy="66" r="3"/>
+    </g>
+    <rect x="93" y="55" width="385" height="23" rx="5" fill="#fff"/>
+    <text x="285" y="71" fill="#52525b" font-size="13" text-anchor="middle">Digital edition / Correspondence / Letter</text>
+
+    <rect x="28" y="86" width="544" height="49" fill="#451624"/>
+    <text x="48" y="116" fill="#fff" font-size="18" font-weight="700">Antje Brons correspondence</text>
+    <text x="550" y="115" fill="#f2dfe1" font-size="13" font-weight="650" text-anchor="end">Published edition</text>
+
+    <g fill="#24242b">
+      <text x="51" y="173" font-size="15" font-weight="650">Letter · 19 December 1898</text>
+      <g font-family="Georgia, serif" font-size="16">
+        <text x="51" y="211" font-style="italic">Realanstalt am Donnersberg</text>
+        <text x="51" y="235">STATION MARNHEIM</text>
+        <rect x="140" y="254" width="164" height="25" rx="4" fill="#faeeef"/>
+        <text x="51" y="272">Hochgeehrte</text>
+        <text x="146" y="272" fill="#7a0712" text-decoration="underline">Frau Kommerzienrat!</text>
+        <text x="51" y="310">Als Sie gegen Ende des Jahres 1885 …</text>
+      </g>
+    </g>
+
+    <path d="M388 171l55 21 55-25m-55 25 39 39" fill="none" stroke="#9394a0" stroke-width="1.5"/>
+    <circle cx="388" cy="171" r="12" fill="#e8f0e5" stroke="#8ead7e"/>
+    <circle cx="443" cy="192" r="15" fill="#eeebf8" stroke="#9d8ec1"/>
+    <circle cx="498" cy="167" r="10" fill="#f3f8fc" stroke="#78aace"/>
+    <circle cx="482" cy="231" r="17" fill="#faeeef" stroke="#b96068" stroke-width="1.5"/>
+    <path d="M304 266h61" stroke="#b96068" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <rect x="365" y="237" width="183" height="82" rx="7" fill="#fff" stroke="#d9d9dd"/>
+    <text x="380" y="262" fill="#7a0712" font-size="13" font-weight="700">Person</text>
+    <text x="380" y="288" fill="#0b0d16" font-size="17" font-weight="700">Brons Antje</text>
+    <g fill="none" stroke="#7a0712" stroke-width="1.5" stroke-linecap="round">
+      <circle cx="512" cy="277" r="3.5"/>
+      <path d="M505 289v-1a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v1"/>
+    </g>
+  </g>
+</svg>
