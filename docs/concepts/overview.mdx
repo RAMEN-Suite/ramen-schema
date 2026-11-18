@@ -57,7 +57,7 @@ _Refinement_ means **specialising** the shared RAMEN model **through inheritance
   number="2"
   src="/images/concepts/refinement.png"
   alt="Example of a project-specific refinement of the RAMEN model"
-  caption="Example of a project-specific refinement from the shared RAMEN model to a correspondence project model"
+  caption="Node types and allowed relationships in a correspondence project model. The project uses the imported Annotation type directly."
 />
 
 ### Refinement through Inheritance
@@ -72,25 +72,23 @@ Refinement should not make a project model **unnecessarily granular**. Internal 
 They should become separate `Collection` or `Content` nodes only when they need to be addressed, linked, validated, or published as independent editorial objects.
 :::
 
-### Restricted Relations and Attributes
+### Relationships and Properties
 
-The relation types themselves cannot be refined. `PART_OF`, `HAS_ANNOTATION`, and `REFERS_TO` remain the fixed association types of RAMEN. A project model can, however, **restrict** where these relations may be used. If `Witness` is modelled as `PART_OF` `Letter`, this does not automatically allow `Witness` to be `PART_OF` any other `Collection` subtype. Missing relations cannot be used _unless they are explicitly defined in the project model_. Projects may add their own relation types, but RAMEN-based tools cannot handle them automatically unless they are explicitly implemented or mapped to RAMEN-compatible behaviour.
+The RAMEN reference model provides `PART_OF`, `HAS_ANNOTATION`, and `REFERS_TO`. A project level explicitly declares the relationships it permits. The npm package [`@ramen-suite/core`](https://www.npmjs.com/package/@ramen-suite/core) exports `RamenModel` from `@ramen-suite/core/ramen`. Its methods `partOf()`, `hasAnnotation()`, and `refersTo()` apply the corresponding RAMEN definitions to selected node types. For example, `partOf(witness, letter)` allows a `Witness` to be part of a `Letter`. For custom bounds at either end, use the inherited `createRelation()` method. See the [RAMEN Core modelling guide](https://ramen-suite.github.io/ramen-core/guides/ramen/overview.html).
 
-Some of these concepts also apply to node attributes. A refined concept keeps the attributes of its RAMEN base type, but can add project-specific attributes where needed.
+A refined node type inherits its properties and can add project-specific ones. For annotations, a project declares an **annotation shape** for each type it records. A shape can add properties and specify which of the model's relationships an annotation of that type may use.
 
 ### Project Modelling with Nori
 
-Project-specific RAMEN models can be created with [Nori](/tools/nori). The tool stores refined node types, allowed relations, attributes, and constraints in a JSON-based model specification that can be used by other RAMEN tools.
-
-See [Nori](/tools/nori) for the modelling tool.
+Use [Nori](/tools/nori) to model an editorial project. The [specification](/specification) describes the RAMEN Core formats for a single model level, for exchanging a model with its predecessors, and for recorded data.
 
 ## Terminology
 
-- **RAMEN** is the conceptual model itself.
-- **RAMEN Schema** is this documentation, specification, and source repository.
-- A **RAMEN project model** specialises RAMEN node types, defines their attributes, and restricts the relations allowed in a particular editorial project.
-- A **refinement** is a project-specific node type that inherits from one of the four RAMEN node types. Relations are restricted or extended, but the three fundamental RAMEN relation types are not refined.
-- **RAMEN-based** describes tools, project models, and datasets that implement or explicitly map to the RAMEN concepts.
+- **RAMEN** is the conceptual model for editorial data.
+- **RAMEN reference model** is the implementation of the shared vocabulary provided by RAMEN Core.
+- **RMF** is the RAMEN Model Format on which the RAMEN reference model and project models are built.
+- **RAMEN project model** defines the node types, properties, relationships, and annotation shapes for a particular project.
+- **Refinement** specialises an inherited model element at a project level.
 
 ## Explore the Model Areas
 

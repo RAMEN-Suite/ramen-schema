@@ -34,17 +34,17 @@ The attributes used to capture material depend on the content type and the used 
 :::warning
 A project model _should_ define the expected attributes for its content types in advance. Different tools **may require different attributes** depending on the workflow; these requirements should be specified **before data capture begins**.
 
-For textual content, a tool may expect a `text` attribute and use `startIndex` and `endIndex` for range-based annotations. For image content, a tool may expect a `url` attribute and use coordinates or [IIIF](https://iiif.io/)-regions for image annotations.
+A project may define a `text` property for transcriptions and a `url` property for images. An annotation can use a selector that the relevant tool interprets against that content.
 :::
 
 ## Content and Annotations
 
 Content and annotations are **closely connected** in RAMEN. A `Content` node carries the material, while `Annotation` nodes add editorial information to it. This can include interpretation, structural markup, classification, or references to other elements.
 
-The relation between content and annotation is expressed through `HAS_ANNOTATION`. A content-bearing node may have zero or more annotations. They may describe the whole content or only a specific part of it, such as a text range or an image region.
+A `HAS_ANNOTATION` link attaches an annotation to a content-bearing node. A recorded annotation can have a `selector` to identify a particular part of that content. RAMEN uses the selector pattern from the [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/#selectors). The examples show selected properties of recorded nodes, with links drawn as arrows.
 
 :::info
-RAMEN annotations provide a `type` attribute that can be used to distinguish annotation kinds **without necessarily refining** the `Annotation` node itself. How far annotation types define additional properties, constraints, or editing behaviour **depends on the project model and tool support**.
+The `type` property identifies the annotation shape declared by the project. Several shapes can use the same `Annotation` node type. A shape can define additional properties and constrain the attachments and references allowed for annotations of that type.
 :::
 
 ## Examples of Capturing Content
@@ -63,14 +63,14 @@ This section shows how different kinds of material can be captured in refined `C
 
 A project may capture textual material in a refined `Content` node such as `Text`. The text itself can be stored in a `text` attribute, while structural, interpretive, or classificatory information is represented separately as `Annotation` nodes.
 
-These annotations can describe the whole content node or specific text ranges. For range-based annotations, attributes such as `startIndex` and `endIndex` can identify the relevant part of the text. This makes it possible to attach paragraphs, headings, quotations, names, corrections, comments, or other editorial information to the same textual content through `HAS_ANNOTATION`.
+These annotations can describe the whole content node or specific text ranges. A [`TextPositionSelector`](https://www.w3.org/TR/annotation-model/#text-position-selector) identifies a text range using `start` and `end` offsets. Figure 2 selects the first five characters of “plain text”. This makes it possible to attach paragraphs, headings, quotations, names, corrections, comments, or other editorial information to the same textual content through `HAS_ANNOTATION`.
 
 <Figure
   id="fig:capturing-text"
   number="2"
-  src="/images/concepts/example-capturing-text.png"
-  alt="Plain text content with a range-based annotation"
-  caption="Plain text content with a range-based annotation"
+  src="/images/concepts/example-capturing-text.svg"
+  alt="A TextPositionSelector marks the first five characters of the text"
+  caption="A TextPositionSelector marks the first five characters of the text"
   width={720}
 />
 
@@ -78,16 +78,16 @@ These annotations can describe the whole content node or specific text ranges. F
 
 A project may capture image-based material in a refined `Content` node such as `Image`. The image itself may be referenced through a `url` attribute or another project-defined attribute.
 
-Annotations can then describe the whole image or a specific region of it. Instead of `startIndex` and `endIndex`, image annotations may use coordinates, bounding boxes, polygons, or [IIIF](https://iiif.io/)-compatible regions, depending on the project model and tool support.
+Annotations can then describe the whole image or a specific region of it. A [`FragmentSelector`](https://www.w3.org/TR/annotation-model/#fragment-selector) can specify a rectangular region with `xywh` coordinates. Tools can interpret other selector types for shapes such as polygons. See the [Core selector guide](https://ramen-suite.github.io/ramen-core/guides/ramen/selectors.html).
 
 As with text, the `Image` node carries or references the material, while `Annotation` nodes add structure, classification, interpretation, or links to other editorial objects.
 
 <Figure
   id="fig:capturing-image"
   number="3"
-  src="/images/concepts/example-capturing-image.png"
-  alt="Image content with a region-based annotation"
-  caption="Image content with a region-based annotation"
+  src="/images/concepts/example-capturing-image.svg"
+  alt="A FragmentSelector marks a rectangular region of the image"
+  caption="A FragmentSelector marks a rectangular region of the image"
   width={720}
 />
 
@@ -102,16 +102,16 @@ Annotations attached to content can often remain general `Annotation` nodes. The
 <Figure
   id="fig:typed-annotation"
   number="4"
-  src="/images/concepts/example-typed-annotation.png"
-  alt="Content annotation typed with a type attribute"
-  caption="Content annotation typed with a type attribute"
+  src="/images/concepts/example-typed-annotation.svg"
+  alt="Name annotation with a project-defined persName type and a text selector"
+  caption="Name annotation with a project-defined persName type and a text selector"
   width={800}
 />
 
 Depending on the project model and tool support, annotation types may also define different expected properties, validation rules, or editing forms. A `persName` annotation may therefore require different information than a `commentary` annotation, even if both remain general `Annotation` nodes.
 
 :::tip
-Refined annotation nodes are useful when an annotation kind **should become a distinct project-specific concept** in the model (e.g., using `Annotation` directly while additionally refining it into `TextAnnotation` and `ImageAnnotation`). In many cases, however, `type`-based annotations are sufficient and avoid unnecessary refinement of the `Annotation` node.
+Refine the node when the model needs a distinct family such as `TextAnnotation` or `ImageAnnotation`. Declare an annotation shape for each kind of annotation the project records. Several shapes can use the same node type.
 :::
 
 #### Linking Content Annotations
@@ -123,10 +123,10 @@ In this pattern, the content, the annotation, and the entity remain separate. Th
 <Figure
   id="fig:refers-entity"
   number="5"
-  src="/images/concepts/example-content-refers-entity.png"
+  src="/images/concepts/example-content-refers-entity.svg"
   alt="Content annotation referring to a Person entity"
   caption="Content annotation referring to a Person entity"
-  width={560}
+  width={800}
 />
 
 ### Serialising and Reusing Existing Content
@@ -140,14 +140,14 @@ A project may capture textual content by transforming existing [TEI/XML](https:/
 <Figure
   id="fig:tei-convert"
   number="6"
-  src="/images/concepts/example-tei-content.png"
+  src="/images/concepts/example-tei-content.svg"
   alt="Transforming TEI/XML encoding into RAMEN content, annotation, and entity nodes"
   caption="Transforming TEI/XML encoding into RAMEN content, annotation, and entity nodes"
-  width={560}
+  width={800}
 />
 
 :::info
-This follows the same general principle as _TEI/XML standoff markup and annotations_ ([cf. Palladino et al. 2020](https://ceur-ws.org/Vol-3110/paper8.pdf)): textual content and annotation information are kept separate, while range information such as `startIndex` and `endIndex` connects each annotation to the relevant part of the text. **[TEI](https://www.tei-c.org/) can serve as one possible vocabulary** for these annotations, but other vocabularies or project-specific annotation types can also be used.
+This follows the same general principle as _TEI/XML standoff markup and annotations_ ([cf. Palladino et al. 2020](https://ceur-ws.org/Vol-3110/paper8.pdf)): textual content and annotation information are kept separate, while a `TextPositionSelector` locates the annotated passage in the extracted text. **[TEI](https://www.tei-c.org/) can serve as one possible vocabulary** for these annotations, but other vocabularies or project-specific annotation types can also be used.
 :::
 
 Alternatively, a refined `Content` node may reference an existing TEI/XML document as an external resource, if the encoded document should remain the primary representation.

@@ -115,6 +115,8 @@ The generated static site is written to:
 build/
 ```
 
+Concept figures live in `static/images/concepts/`. The selector example SVGs include editable draw.io data. To make a change, open the SVG in draw.io and export it again with **Include a copy of my diagram** enabled.
+
 ## Publishing specifications
 
 `npm start` and `npm run build` automatically run `npm run schemas:export`. The script reads the JSON schemas bundled with the locked version of `@ramen-suite/core` and copies each file byte for byte to the path declared by its `$id` on `https://ramen-schema.org`. It also writes the reference model exported by Core and generates the catalogue for the Specification page.

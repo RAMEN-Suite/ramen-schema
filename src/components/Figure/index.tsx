@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import Link from "@docusaurus/Link";
 import styles from "./styles.module.css";
 
 type FigureProps = {
@@ -17,7 +16,7 @@ type FigRefProps = {
 };
 
 export function FigRef({ id, children }: FigRefProps): ReactNode {
-  return <Link to={`#${id}`}>{children}</Link>;
+  return <a href={`#${id}`}>{children}</a>;
 }
 
 export default function Figure(props: FigureProps): ReactNode {
