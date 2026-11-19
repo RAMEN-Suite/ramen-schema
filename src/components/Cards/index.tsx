@@ -1,29 +1,29 @@
-import type { ReactNode } from "react";
-import Heading from "@theme/Heading";
-import Link from "@docusaurus/Link";
-import styles from "./styles.module.css";
+import type { ReactNode } from 'react';
+import Heading from '@theme/Heading';
+import Link from '@docusaurus/Link';
+import styles from './styles.module.css';
 
 const tools = [
   {
-    title: "Model with Nori",
-    description: "Define the types, properties, relationships, and validation rules your project needs.",
-    image: "/images/cards/card_nori.svg",
-    alt: "Text has an Annotation, used directly from RAMEN, which refers to a Person in Nori",
-    to: "/tools/nori",
+    title: 'Model with Nori',
+    description: 'Define the types, properties, relationships, and validation rules your project needs.',
+    image: '/images/cards/card_nori.svg',
+    alt: 'Text has an Annotation, used directly from RAMEN, which refers to a Person in Nori',
+    to: '/tools/nori',
   },
   {
-    title: "Annotate with Miso",
-    description: "Capture content, annotate passages and image regions, and link them to entities.",
-    image: "/images/cards/card_miso.svg",
-    alt: "A selected phrase in Miso is linked to the person Antje Brons",
-    to: "/tools/miso",
+    title: 'Annotate with Miso',
+    description: 'Capture content, annotate passages and image regions, and link them to entities.',
+    image: '/images/cards/card_miso.svg',
+    alt: 'A selected phrase in Miso is linked to the person Antje Brons',
+    to: '/tools/miso',
   },
   {
-    title: "Publish with Shoyu",
-    description: "Publish an edition whose content, annotations, and connections readers can explore.",
-    image: "/images/cards/card_shoyu.svg",
-    alt: "A published letter in Shoyu with a linked person record and a graph of related records",
-    to: "/tools/shoyu",
+    title: 'Publish with Shoyu',
+    description: 'Publish an edition whose content, annotations, and connections readers can explore.',
+    image: '/images/cards/card_shoyu.svg',
+    alt: 'A published letter in Shoyu with a linked person record and a graph of related records',
+    to: '/tools/shoyu',
   },
 ];
 

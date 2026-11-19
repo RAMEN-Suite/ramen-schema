@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
-import styles from "./styles.module.css";
+import type { ReactNode } from 'react';
+import styles from './styles.module.css';
 
 type FigureProps = {
   id: string;
@@ -26,8 +26,8 @@ export default function Figure(props: FigureProps): ReactNode {
       <div
         className={styles.viewport}
         tabIndex={props.minWidth ? 0 : undefined}
-        role={props.minWidth ? "region" : undefined}
-        aria-label={props.minWidth ? "Scrollable diagram" : undefined}
+        role={props.minWidth ? 'region' : undefined}
+        aria-label={props.minWidth ? 'Scrollable diagram' : undefined}
       >
         <img
           className={styles.image}

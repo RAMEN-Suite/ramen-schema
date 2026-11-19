@@ -15,5 +15,11 @@
   "endOfLine": "lf",
 
   "htmlWhitespaceSensitivity": "css",
-  "singleAttributePerLine": false
+  "singleAttributePerLine": false,
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.mdx"],
+      "options": { "singleQuote": true }
+    }
+  ]
 }

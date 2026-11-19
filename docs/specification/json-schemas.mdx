@@ -3,8 +3,8 @@ title: JSON schemas
 description: Choose and download a schema for RAMEN models, exchanged files, or recorded data.
 ---
 
-import specification from "@site/.generated/specifications.json";
-import CodeBlock from "@theme/CodeBlock";
+import specification from '@site/.generated/specifications.json';
+import CodeBlock from '@theme/CodeBlock';
 
 # JSON schemas
 
@@ -67,7 +67,7 @@ For example, this fragment selects the RAMEN project schema. The remaining requi
 <CodeBlock language="json">
   {JSON.stringify(
     {
-      $schema: specification.schemas.find(({ filename }) => filename === "ramen-project.schema.json").id,
+      $schema: specification.schemas.find(({ filename }) => filename === 'ramen-project.schema.json').id,
     },
     null,
     2,
