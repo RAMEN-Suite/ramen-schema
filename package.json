@@ -4,7 +4,7 @@
   "license": "Apache-2.0",
   "author": {
     "name": "Sebastian Enns",
-    "email": "sebastian.enns@mni.thm.de",
+    "email": "mail@sebenns.com",
     "url": "https://www.sebenns.com"
   },
   "private": true,
@@ -16,8 +16,8 @@
     "build": "docusaurus build",
     "serve": "docusaurus serve",
     "typecheck": "tsc",
-    "format": "prettier --check src",
-    "format:fix": "prettier --write src",
+    "format": "prettier --check docs src scripts docusaurus.config.ts sidebars.ts package.json README.md .github/workflows",
+    "format:fix": "prettier --write docs src scripts docusaurus.config.ts sidebars.ts package.json README.md .github/workflows",
     "deploy:pages": "npm run build",
     "prepare": "git config core.hooksPath .githooks"
   },

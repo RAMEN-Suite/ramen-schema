@@ -25,8 +25,9 @@ const config: Config = {
   organizationName: "RAMEN-Suite",
   projectName: "RAMEN-Schema",
 
-  onBrokenLinks: "warn",
-  markdown: { hooks: { onBrokenMarkdownLinks: "warn" } },
+  onBrokenLinks: "throw",
+  onBrokenAnchors: "throw",
+  markdown: { hooks: { onBrokenMarkdownLinks: "throw" } },
 
   i18n: {
     defaultLocale: "en",
