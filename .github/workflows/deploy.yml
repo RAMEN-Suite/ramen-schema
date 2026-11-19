@@ -40,6 +40,9 @@ jobs:
       - name: Typecheck
         run: npm run typecheck --if-present
 
+      - name: Test specification archive
+        run: npm test
+
       - name: Build
         run: npm run build
 

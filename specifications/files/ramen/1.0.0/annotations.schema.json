@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ramen-schema.org/ramen/1.0.0/annotations.schema.json",
+  "title": "RAMEN Annotation Definitions",
+  "description": "Project-defined annotation shapes with their own properties and permitted modelled relations.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "annotations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AnnotationShape"
+      },
+      "default": []
+    }
+  },
+  "$defs": {
+    "Id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]{16,}$"
+    },
+    "Ref": {
+      "type": "string",
+      "pattern": "^(?:[A-Za-z0-9_-]{16,}|[A-Za-z0-9_-]{16,}:[A-Za-z0-9_-]{16,})$"
+    },
+    "Bounds": {
+      "type": "object",
+      "required": ["lowerBound", "upperBound"],
+      "additionalProperties": false,
+      "properties": {
+        "lowerBound": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "upperBound": {
+          "type": "integer",
+          "minimum": -1
+        }
+      }
+    },
+    "AnnotationShapeProperty": {
+      "description": "A property declared only for this annotation shape. Shared node properties apply automatically.",
+      "$ref": "https://ramen-schema.org/model/1.0.0/schema.json#/$defs/Attribute"
+    },
+    "AnnotationShapeRelation": {
+      "type": "object",
+      "description": "Selects one or more modelled relations for this annotation shape. Their matches share one cardinality interval.",
+      "required": ["relationIds", "direction", "bounds"],
+      "additionalProperties": false,
+      "properties": {
+        "relationIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/Ref"
+          },
+          "description": "References to modelled relations counted together. Their endpoint types determine which nodes can be connected."
+        },
+        "direction": {
+          "enum": ["outgoing", "incoming"],
+          "description": "Direction viewed from the Annotation node. An incoming HAS_ANNOTATION relation determines a permitted carrier such as Text or Image."
+        },
+        "bounds": {
+          "$ref": "#/$defs/Bounds",
+          "description": "Total number of matching relations allowed for one annotation; it must not widen the modelled cardinality."
+        }
+      }
+    },
+    "AnnotationShape": {
+      "type": "object",
+      "description": "One closed type value scoped to an Annotation node and inherited by refinements of that node.",
+      "required": ["id", "annotationId", "type", "properties", "relations"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/Id",
+          "description": "Stable identifier of this type declaration, separate from its serialised type value."
+        },
+        "annotationId": {
+          "$ref": "#/$defs/Ref",
+          "description": "Annotation node on which this type is declared. It may be the imported RAMEN Annotation node."
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Required value of the Annotation.type property in data using this declaration."
+        },
+        "properties": {
+          "type": "array",
+          "description": "Properties owned by this type. Node properties, including inherited ones, apply automatically and cannot be redeclared here.",
+          "items": {
+            "$ref": "#/$defs/AnnotationShapeProperty"
+          },
+          "default": []
+        },
+        "relations": {
+          "type": "array",
+          "description": "Complete allowlist of incoming and outgoing relations for this type. Omitted relations are not available to data using it.",
+          "items": {
+            "$ref": "#/$defs/AnnotationShapeRelation"
+          },
+          "default": []
+        },
+        "description": {
+          "$ref": "https://ramen-schema.org/model/1.0.0/schema.json#/$defs/Description"
+        },
+        "ext": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Opaque tool metadata, preserved without interpretation."
+        }
+      }
+    }
+  }
+}

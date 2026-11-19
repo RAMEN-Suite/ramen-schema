@@ -6,6 +6,8 @@
 
 # Generated files
 /.generated/
+/specifications/manifest.json.tmp
+/specifications/files/**/*.tmp
 .docusaurus
 .cache-loader
 

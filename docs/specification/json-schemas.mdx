@@ -58,6 +58,25 @@ These files are exported from `@ramen-suite/core`. Each download uses the canoni
   </tbody>
 </table>
 
+## Earlier versions
+
+Schemas and reference models remain available at their versioned URLs.
+
+The downloads above describe the current Core release; earlier versions are listed below when available. Core package versions, file-format versions, and reference-model versions are [independent](/specification/validation#understand-versions).
+
+{specification.archivedResources.length > 0 ? (
+
+  <ul>
+    {specification.archivedResources.map(({ path, title }) => (
+      <li key={path}>
+        <a href={path}>{title}</a> — <code>{path}</code>
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No earlier versions have been published yet.</p>
+)}
+
 ## Schema identifiers
 
 A schema's `$id` identifies that schema. A document's `$schema` identifies the schema used to describe its format.

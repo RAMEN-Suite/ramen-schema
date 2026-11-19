@@ -80,6 +80,8 @@ npm run typecheck
 
 Use `npm run format:fix` to format documentation, source code, and configuration files.
 
+TypeScript utilities follow the Core conventions: explicit local, parameter, return, and callback types; read-only input contracts; runtime checks for JSON data; and small functions separated into semantic blocks. Both TypeScript configurations check indexed access and use unknown catch variables. Prettier uses single quotes in TypeScript, TSX, and MDX JavaScript expressions.
+
 Create a production build:
 
 ```bash
@@ -102,16 +104,23 @@ Concept and specification diagrams are editable SVGs in `static/images/concepts/
 
 ## Publishing specifications
 
-`npm start` and `npm run build` automatically run `npm run schemas:export`. The script reads the JSON schemas bundled with the locked version of `@ramen-suite/core` and copies each file byte for byte to the path declared by its `$id` on `https://ramen-schema.org`. It also writes the reference model exported by Core and generates the catalogue for the Specification page.
+Local dependency installation automatically synchronises the schemas and reference model from the locked `@ramen-suite/core` package into `specifications/`. The archive keeps the latest synced content at each canonical URL. New version URLs are added without removing older versions. Replacing content under an existing URL requires an explicit `npm run schemas:sync -- --replace`; a normal install or sync never overwrites existing snapshots. Schemas are copied byte for byte, and the reference model is serialised from Core's exported object. SHA-256 checksums verify the checked-in snapshots, not a permanent content freeze.
 
-GitHub Actions checks formatting and TypeScript, runs the production build, and publishes the full `build/` directory to GitHub Pages. Broken internal links and anchors fail the build. To update Core, run `npm install --save-dev --save-exact @ramen-suite/core@<version>` and commit both package files. If a new format supersedes a published `$id`, keep the previously published JSON at its original path under `static/`.
+Interrupted syncs can be retried with the same options, including `--replace` when a replacement was started. Identical unregistered files are adopted; conflicting unregistered files produce an error and remain untouched. The archive is checked into Git and must not be reformatted or edited manually.
+
+`npm start` and `npm run build` export every archived resource to its canonical path on `https://ramen-schema.org`. The Specification page lists the current Core files and any earlier formats. Builds verify archive integrity and require the current Core files to match their synced snapshots. CI installation checks the archive without updating it.
+
+To update Core, run `npm install --save-dev --save-exact @ramen-suite/core@<version>`. The local install hook adds new URLs automatically. If existing URLs have changed, installation stops and asks for `npm run schemas:sync -- --replace`; review and commit that replacement explicitly. Commit `specifications/` together with `package.json` and `package-lock.json`. If lifecycle scripts were disabled during installation, run `npm run schemas:sync` explicitly. No manual copying of old files is needed.
+
+The utilities in `tools/` run directly as TypeScript with Node.js; no separate compilation step is required. `npm test` checks version retention, same-version updates, interrupted syncs, and archive integrity using temporary fixtures. GitHub Actions runs these tests, formatting, TypeScript, and the production build before publishing `build/` to GitHub Pages. Broken internal links and anchors fail the build.
 
 ## Project Structure
 
 ```text
 .
 ├── docs/                  # Documentation pages
-├── scripts/               # Schema and reference model export
+├── tools/                 # TypeScript utilities for specification sync, export, and tests
+├── specifications/        # Archive of published schemas and reference models
 ├── src/                   # Custom React components and CSS
 ├── static/                # Static assets such as logos and images
 ├── docusaurus.config.ts   # Main Docusaurus configuration

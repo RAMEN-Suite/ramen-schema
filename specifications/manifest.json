@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "resources": [
+    {
+      "filename": "model-file.schema.json",
+      "id": "https://ramen-schema.org/model/1.0.0/file.schema.json",
+      "path": "/model/1.0.0/file.schema.json",
+      "title": "RMF shared model graph",
+      "kind": "schema",
+      "coreVersion": "0.1.0",
+      "sha256": "03e224ce788e009934fa64a6881a03f3833a69d92bb305d060281994383550f9"
+    },
+    {
+      "filename": "model-instances.schema.json",
+      "id": "https://ramen-schema.org/model/1.0.0/instances.schema.json",
+      "path": "/model/1.0.0/instances.schema.json",
+      "title": "RAMEN model instance graph",
+      "kind": "schema",
+      "coreVersion": "0.1.0",
+      "sha256": "2e5a4a236be2083ac6f24d673cbb6617f95749bea54bbc0eaf8405129544fa92"
+    },
+    {
+      "filename": "model.schema.json",
+      "id": "https://ramen-schema.org/model/1.0.0/schema.json",
+      "path": "/model/1.0.0/schema.json",
+      "title": "RAMEN model format",
+      "kind": "schema",
+      "coreVersion": "0.1.0",
+      "sha256": "5519ee33e3ba63fd6374a0ab5fe0fa0adfd81ef0fb9fb991d15eaa52dbf61cc2"
+    },
+    {
+      "filename": "ramen-annotations.schema.json",
+      "id": "https://ramen-schema.org/ramen/1.0.0/annotations.schema.json",
+      "path": "/ramen/1.0.0/annotations.schema.json",
+      "title": "RAMEN Annotation Definitions",
+      "kind": "schema",
+      "coreVersion": "0.1.0",
+      "sha256": "20dfc44b6e548aef6f2f6b6af1e852e75d89add052676a6672d9ce0b990c6336"
+    },
+    {
+      "filename": "ramen-file.schema.json",
+      "id": "https://ramen-schema.org/ramen/1.0.0/file.schema.json",
+      "path": "/ramen/1.0.0/file.schema.json",
+      "title": "RAMEN shared model graph",
+      "kind": "schema",
+      "coreVersion": "0.1.0",
+      "sha256": "f4934cdaeb4b0780674f773746a111d7bdb4726641fedaee52cd329d7d9c4fb2"
+    },
+    {
+      "id": "https://ramen-schema.org/ramen/1.0.0/model.json",
+      "path": "/ramen/1.0.0/model.json",
+      "title": "RAMEN reference model 1.0.0",
+      "kind": "reference-model",
+      "coreVersion": "0.1.0",
+      "sha256": "37f500d3677547b2436c396e3a35f4770f140694374a6093e8b5932e3e1f3653"
+    },
+    {
+      "filename": "ramen-project.schema.json",
+      "id": "https://ramen-schema.org/ramen/1.0.0/project.schema.json",
+      "path": "/ramen/1.0.0/project.schema.json",
+      "title": "RAMEN project model",
+      "kind": "schema",
+      "coreVersion": "0.1.0",
+      "sha256": "5468f151759c194699b89198af1542ef4c580abe38f38575e461a19618d10131"
+    }
+  ]
+}
