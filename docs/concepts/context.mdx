@@ -1,118 +1,95 @@
 ---
 title: Contextual Structures
-description: How collections organise, contextualise, and relate parts of an edition in RAMEN.
+description: How collections organise sources and other parts of an edition in RAMEN.
 slug: /concepts/context
 ---
 
-import Figure, { FigRef } from "@site/src/components/Figure";
-import Link from "@docusaurus/Link";
+import Figure from "@site/src/components/Figure";
 
 # Contextual Structures
 
-Context in RAMEN distinguishes **content-bearing objects** from the **contextual structures** that give them an editorial role. A `Content` node carries material, such as text or image data; a `Collection` node describes the context in which that material is understood. The same text may therefore belong to different witnesses, letters, corpora, or other project-specific structures.
+A transcription can be read as the text of a particular copy of a letter, as part of a correspondence, or within a larger corpus. RAMEN uses **collections** to describe these contexts and how they fit together.
 
-This is modelled through `PART_OF` relations. Content can be `PART_OF` a collection, and collections can be `PART_OF` larger collections. RAMEN can therefore describe different editorial contexts for the same content.
+A `Content` node stores or references the material. A `Collection` groups content or other collections. The same content can belong to more than one collection.
 
 <Figure
   id="fig:context"
   number="1"
-  src="/images/concepts/part-context.png"
-  alt="Context modelling with Collection, Content, and PART_OF relations"
-  caption="Context modelling with Collection, Content, and PART_OF relations"
-  width={640}
+  src="/images/concepts/part-context.svg"
+  alt="Content is PART_OF a Collection, which is PART_OF another Collection."
+  caption="Read PART_OF from the smaller part towards the collection it belongs to."
+  width={700}
 />
 
-## Collection Nodes
+## Collections and Membership
 
-**Collection** nodes represent contextual structures. They describe how parts of an edition are grouped, arranged, or interpreted as belonging together. A `Content` node may contain only plain text or image data, while a `Collection` defines what this content is within the project.
+A project can refine `Collection` into types such as `Letter`, `Witness`, or `Corpus`. A witness is a surviving copy of a text. In a correspondence edition, a letter might bring together several witnesses, each with its own transcription and images.
 
-Through `PART_OF` relations, collections can contain other collections as well as content-bearing nodes, allowing projects to build larger contextual structures from smaller ones. Collections are not only containers: they can also be annotated through `HAS_ANNOTATION` and referred to by annotations through `REFERS_TO`, making them objects of editorial interpretation.
+`PART_OF` records membership. The project model defines which types can be connected and how many connections are allowed. For example, it can require each witness to belong to exactly one letter.
 
-:::tip
-When the order of items in a collection is **part of the editorial interpretation**, it can be represented in different ways depending on the project model. One option is an `Annotation` node: the collection `HAS_ANNOTATION` the ordering annotation, and the annotation `REFERS_TO` the items whose sequence is being described.
+Collections can also have annotations. A project might attach commentary to a letter or annotate how a corpus was assembled. Other annotations can refer to a collection through `REFERS_TO`.
 
-More detailed models may introduce custom implementations or use several connected annotations.
+:::note[Ordering]
+
+`PART_OF` records membership, not sequence. A project can attach an ordering annotation to a collection, refer to its members, and store their IDs in a declared `sequence` property, for example `["witness-record-a1", "witness-record-b1"]`. Alternatively, one annotation per member can refer to that member and store a declared numeric `position`, such as `1` or `2`. The order then belongs to that collection; the same object can have a different position elsewhere.
+
+Tools must interpret these values and check membership, duplicate positions, and missing entries as required by the project. RAMEN assigns no built-in ordering meaning to `sequence`, `position`, or a property called `sort`.
+
+A tool can instead maintain a `NEXT` chain internally. `NEXT` is not a RAMEN reference-model relationship. Such tool-specific links stay outside the instance graph passed to Core, and the tool checks the chain for cycles, branches, or missing members. For exchange as RAMEN data, use a declared ordering annotation.
+
 :::
 
-## The `PART_OF` Relation
+## Examples
 
-`PART_OF` is the central relation for contextual structures. It organises collections into larger collections and relates content-bearing nodes to the collections in which they are understood. In project models, allowed `PART_OF` relations are defined explicitly: not every collection can automatically be part of every other collection.
-
-This allows projects to model contextual structures with clear rules. A project may define, for example, that a `Text` is `PART_OF` a `Witness`, and that a `Witness` is `PART_OF` a `Letter`. If another relation is needed, it has to be part of the project model.
-
-## Examples of Contextual Structures
-
-The following examples show how `Collection` and `PART_OF` can model different forms of editorial organisation.
-
-:::note
-The following examples are **not intended as best practices**. They illustrate possible ways of modelling structures. Project models depend on material, research questions, workflows, and requirements, and they evolve as a project develops.
-:::
-
-:::info
-The examples below describe **model concepts**, not individual data records. A project model may define a collection type such as `Corpus`; the actual data may then contain a specific corpus titled _Correspondence between Person A and B_.
-
-`Corpus` is the model type, while the titled corpus is one concrete instance of that type.
-:::
+These examples show possible project models. They describe **types and permitted relationships**, rather than individual records. Projects choose their structures to suit their material and research questions.
 
 ### Correspondence
 
-In a correspondence edition, a project may distinguish between a `Corpus`, a `Letter`, one or more `Witness` collections, and the refined `Content` node `Text`, which carries the plain text of the transcription. Through `PART_OF`, the `Text` can be understood as the text of a specific `Witness`, the `Witness` as part of a `Letter`, and the `Letter` as part of a `Corpus`.
+A correspondence model can connect `Text`, `Witness`, `Letter`, and `Corpus` through `PART_OF`. The transcription belongs to a witness; the witness belongs to a letter; the letter belongs to a corpus.
 
-A `Corpus` can also be used at different contextual levels. For example, one `Corpus` may represent the correspondence between two persons, while another `Corpus` may represent the broader collection of all correspondence edited by the project.
+One corpus can also belong to another. A project could group the correspondence between two people within its larger corpus of letters.
 
 <Figure
   id="fig:correspondence"
   number="2"
-  src="/images/concepts/example-correspondence.png"
-  alt="Example contextual structure of a correspondence edition in Nori"
-  caption={
-    <>
-      Example contextual structure of a correspondence edition in <Link to="/tools/nori">Nori</Link>.
-    </>
-  }
-  width={450}
+  src="/images/concepts/example-correspondence.svg"
+  alt="Text is part of a Witness, the Witness is part of a Letter, and the Letter is part of a Corpus. A loop permits one Corpus to be part of another."
+  caption="A correspondence model. The Corpus loop permits nested corpora; it does not mean a recorded corpus contains itself."
+  width={700}
 />
 
 ### Regesta
 
-In a regesta project, a project model may distinguish between a `Regesta`, refined `Content` nodes such as `Title`, `Summary`, `Commentary`, or `ArchivalHistory`, and larger contextual structures such as a `Volume` or `Department`.
+A regest summarises a document. In this example, the project type `Regest` groups each entry, with separate content for its title, summary, commentary, and archival history. The entry can belong to a volume, which belongs to a larger series or department.
 
-The `Regesta` is a `Collection` node. It brings together these separate content-bearing nodes as one contextualised editorial object. Through `PART_OF`, each refined `Content` node can be related to one `Regesta`.
-
-The `Regesta` can then be related to larger `Collection` nodes, such as a `Volume` or `Department`. This makes it possible to capture the textual parts separately while still modelling them as one regest within a broader editorial or archival structure.
+This lets the project edit these texts separately while keeping them together as one entry.
 
 <Figure
   id="fig:regesta"
   number="3"
-  src="/images/concepts/example-regesta.png"
-  alt="Example contextual structure of a regesta project in Nori"
-  caption={
-    <>
-      Example contextual structure of a regesta project in <Link to="/tools/nori">Nori</Link>.
-    </>
-  }
-  width={450}
+  src="/images/concepts/example-regesta.svg"
+  alt="Title, Summary, Commentary, and ArchivalHistory content belong to a Regest collection. Regest belongs to Volume, which belongs to Department."
+  caption="Separate texts form one regest, which belongs to a larger editorial structure. All arrows represent PART_OF."
+  width={700}
+  minWidth={600}
 />
 
 ### Books of Fortune
 
-Books of fortune are **non-linear and interactive** texts. Instead of being read from beginning to end, they guide readers through questions, randomising mechanisms, thematic sections, authorities, and possible game paths ([cf. Cugliana et al. 2024](https://doi.org/10.17175/2024_005)).
+Books of fortune guide readers through questions, choices, and possible answers instead of a single sequence of pages ([cf. Cugliana et al. 2024](https://doi.org/10.17175/2024_005)).
 
-A project model may distinguish here between different refined `Collection` nodes. `Concept` nodes can describe larger structural components of the text, `Version` and `Witness` nodes the transmission context, and `Section` nodes the internal organisation of a witness. `Text` nodes are refined `Content` nodes that carry the actual textual content.
+A project can organise sections by their witness and version, while also grouping them into possible reading paths. In this example, `Concept` names the broader work structure and `GamePath` groups sections along one reading path. Both are project-specific collection types.
 
-A `GamePath` could be modelled as a separate `Collection`. It brings together the text parts that belong to one possible reading path through the book, for example from a question to an answer.
-
-This makes it possible to describe the **same material in two ways**: as part of a witness and as part of an interactive path.
+The example groups sections into a reading path without assigning that path to a version or concept. If a project needs that restriction, it can declare an additional `GamePath PART_OF Version` or `GamePath PART_OF Concept` relationship. The choice depends on whether paths stay within one version or cross versions.
 
 <Figure
   id="fig:sortes"
   number="4"
-  src="/images/concepts/example-sortes.png"
-  alt="Example contextual structure of books of fortune in Nori"
-  caption={
-    <>
-      Example contextual structure of books of fortune in <Link to="/tools/nori">Nori</Link>.
-    </>
-  }
-  width={400}
+  src="/images/concepts/example-sortes.svg"
+  alt="Text belongs to Section. Section belongs both to Witness and GamePath. Witness belongs to Version, which belongs to Concept."
+  caption="A section belongs to a witness and to a reading path. All arrows represent PART_OF."
+  width={700}
+  minWidth={600}
 />
+
+See the [reference model](/specification/reference-model#restricting-relationships) for relationship bounds and [Nori](/tools/nori) for defining a project model visually.

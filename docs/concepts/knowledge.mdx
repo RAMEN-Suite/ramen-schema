@@ -1,6 +1,6 @@
 ---
 title: Modelling Knowledge
-description: How entities, annotations, and connections make editorial knowledge explicit in RAMEN.
+description: How RAMEN entities and annotations record people, places, and editorial statements.
 slug: /concepts/knowledge
 ---
 
@@ -8,79 +8,69 @@ import Figure from "@site/src/components/Figure";
 
 # Modelling Knowledge
 
-Knowledge in RAMEN describes how editorial information is **made explicit** through annotations and connections. An `Annotation` node contributes to the knowledge structure of the edition whenever it describes, classifies, interprets, or links editorial objects.
+An edition can describe the people, places, works, and events connected to its sources. RAMEN represents these as **entities**. Annotations record statements about them and connect them to content, collections, or other entities.
 
-RAMEN does not treat knowledge as a **separate layer detached from the edition**. Knowledge is built through explicit connections between annotations, entities, content, collections, and other annotations. Because RAMEN is close to graph-based knowledge modelling, entities can **also be connected** to external authority records, knowledge graphs, datasets, or other resources.
-
-A central part of this knowledge concerns **identifiable objects** of scholarly interest, such as persons, places, works, institutions, events, or concepts. In RAMEN, these objects can be represented as `Entity` nodes.
+For example, a name annotation can connect a passage to a person. Another annotation can record a family relationship between two people, with a source or a note about uncertainty.
 
 <Figure
   id="fig:knowledge"
   number="1"
-  src="/images/concepts/part-knowledge.png"
-  alt="Knowledge modelling with Annotation, Content, Collection, Entity, HAS_ANNOTATION, and REFERS_TO"
-  caption="Knowledge modelling with Annotation, Content, Collection, Entity, HAS_ANNOTATION, and REFERS_TO"
-  width={640}
+  src="/images/concepts/part-knowledge.svg"
+  alt="Collection, Content, Entity, and Annotation can have annotations. Annotations can refer to collections, content, and entities."
+  caption="Annotations connect editorial objects and can themselves receive annotations."
+  width={700}
+  minWidth={600}
 />
 
-## Entity Nodes
+## Entities and Their Properties
 
-`Entity` nodes represent identifiable objects of scholarly interest. A refined `Entity` node may, for example, be called `Person`, `Place`, `Work`, `Institution`, `Event`, or `Concept`, depending on the project model.
+A project can refine `Entity` into types such as `Person`, `Place`, `Work`, or `Event`. Each recorded entity has a `label` and a `uuid`, inherited from RAMEN. The project can add properties such as dates, descriptions, or external identifiers.
 
-Entities can carry attributes, such as names, dates, descriptions, external authority references, or links to knowledge graphs and other resources. They can also be annotated through `HAS_ANNOTATION`, which makes it possible to add editorial statements about an entity without changing the entity itself.
+One person can be linked to many occurrences of a name. The written name stays in the source text; the entity represents the person identified by the project. See the [content annotation example](/concepts/content#linking-content-annotations).
 
-## The `REFERS_TO` Relation
+## Statements and References
 
-`REFERS_TO` is used when an `Annotation` points to the editorial object that its statement is about. This target may be an `Entity`, but it may also be a `Content` node or a `Collection`.
+`HAS_ANNOTATION` attaches a statement to the object being described. `REFERS_TO` connects the annotation to the object it refers to. That reference can point to an entity, content, or a collection.
 
-`Annotation` nodes are one of the main mechanisms for making **editorial knowledge explicit**. Through `HAS_ANNOTATION`, an annotation is attached to the object being annotated; through `REFERS_TO`, it connects this statement to the object it refers to.
-
-This makes it possible to model knowledge as **explicit editorial statements** rather than as direct, unqualified links.
-
-:::info
-`Annotation` nodes themselves **can also be annotated** through `HAS_ANNOTATION`. This makes it possible to qualify or comment on statements, for example by adding information about certainty, source, responsibility or interpretation, **without** making annotations targets of `REFERS_TO`.
-:::
-
-## Connecting Authority Data
-
-External authority providers such as the [GND](https://gnd.network/) or [Wikidata](https://www.wikidata.org/) can be connected to RAMEN entities _implicitly_ by referencing identifiers or URIs, for example through entity attributes or annotations.
-
-For workflows that connect several databases while keeping their data holdings separate, see [NAKAR](https://go.thm.de/nakar).
-
-## Examples of Modelling Knowledge
-
-The following examples show how annotations, entities, and references to other editorial objects can be used.
-
-:::note
-The examples below describe **knowledge-modelling patterns**. They are **not intended as best practices**, but illustrate possible modelling choices that may differ between projects and tools.
-:::
-
-### Named Entity Connections
-
-A common knowledge-modelling pattern is to connect a text passage to an identifiable entity. A refined `Content` node, such as `Text`, can `HAS_ANNOTATION` an `Annotation` with `type: "persName"`. This annotation can then `REFERS_TO` a `Person` entity.
-
-In this pattern, the textual occurrence and the identified person **remain separate**. The text contains the written form, the annotation describes the occurrence, and the entity represents the person as an **independent knowledge object**.
-
-<Figure
-  id="fig:knowledge-named-entity"
-  number="2"
-  src="/images/concepts/example-content-refers-entity.svg"
-  alt="A persName annotation selects “Gaius” and refers to the Person entity"
-  caption="A persName annotation selects “Gaius” and refers to the Person entity"
-  width={800}
-/>
-
-### Entity Connections
-
-Knowledge can also be modelled between entities. For example, a `Person` entity may `HAS_ANNOTATION` a refined `Annotation` node such as `Kinship`, and this annotation may `REFERS_TO` another `Person` entity.
-
-This makes the connection itself **explicit**, editable, and annotatable. The statement is not only a direct edge between two persons; it can carry its own type, attributes, sources, uncertainty, commentary, or further annotations if the project model requires it. In this example, `Kinship` is a project-specific refinement of `Annotation`, while `type: "spouseOf"` describes the kind of kinship.
+For a relationship between people, a project might refine `Annotation` into `Kinship` and declare a `spouseOf` shape. The annotation is attached to one person and refers to the other.
 
 <Figure
   id="fig:knowledge-entity-connection"
-  number="3"
-  src="/images/concepts/example-entity-refers-entity.png"
-  alt="Entity connection modelled through a refined Kinship annotation"
-  caption="Entity connection modelled through a refined Kinship annotation"
-  width={560}
+  number="2"
+  src="/images/concepts/example-entity-refers-entity.svg"
+  alt="The Person Antje Brons HAS_ANNOTATION a Kinship annotation of type spouseOf, which REFERS_TO the Person Ysaak Brons."
+  caption="A relationship between two people is recorded as an annotation. Kinship refines Annotation; spouseOf selects its shape."
+  width={700}
 />
+
+The statement can carry properties such as a source, date, or certainty level if the project defines them. Refining `Annotation` is optional: a project can also declare a `spouseOf` shape on the shared type.
+
+### Symmetric Relationships
+
+The graph records a source person and a referenced person even when the intended relationship, such as `spouseOf`, is symmetric. The project and tools must define that meaning. To find a person's spouses, a tool needs to consider both attachments to that person and annotations that refer to them. Core does not create an inverse statement automatically.
+
+### Commenting on Statements
+
+Annotations can themselves have annotations through `HAS_ANNOTATION`. A project can use this to comment on an identification, cite evidence, or record a different interpretation while keeping the earlier statement.
+
+In this example, a project declares a `comment` shape with a `text` property. A comment asks which source supports the `spouseOf` statement. It is attached to the statement itself, so the original claim and the question remain separate.
+
+<Figure
+  id="fig:comment-on-statement"
+  number="3"
+  src="/images/concepts/example-comment-on-statement.svg"
+  alt="Antje Brons has a Kinship annotation of type spouseOf referring to Ysaak Brons. That Kinship annotation has a further annotation of type comment asking which source supports the statement."
+  caption="A project-defined comment annotates the kinship statement through HAS_ANNOTATION."
+  width={700}
+  minWidth={600}
+/>
+
+The reference model allows annotations as targets of `HAS_ANNOTATION`; `REFERS_TO` targets content, collections, and entities. See the [reference model](/specification/reference-model#relationships) for the available connections.
+
+## Connecting Authority Data
+
+A project can store an identifier or URI from an authority service such as the [GND](https://gnd.network/) or [Wikidata](https://www.wikidata.org/) as an entity property. An annotation can record the proposed match and its evidence when that identification needs to remain a separate statement.
+
+An external identifier provides a reference; retrieving or synchronising external records depends on the tools. For workflows connecting separate databases, see [NAKAR](https://go.thm.de/nakar).
+
+The project model defines which statements and properties can be recorded. See the [specification](/specification) for annotation shapes and validation, or [Nori](/tools/nori) to define these rules visually.

@@ -1,0 +1,70 @@
+---
+title: Related Standards
+description: How RAMEN relates to text encoding, annotation, image delivery, ontologies, and graph validation.
+slug: /concepts/related-standards
+---
+
+# Related Standards
+
+Projects can use RAMEN alongside existing encodings, vocabularies, and delivery services. The relevant distinction is what each describes: the content itself, the meaning of project types, or the connections between editorial objects.
+
+| Standard or approach | Use with RAMEN                                            |
+| -------------------- | --------------------------------------------------------- |
+| TEI                  | Retain encoded documents or map selected markup.          |
+| W3C Web Annotation   | Use selectors and lifecycle properties such as `creator`. |
+| IIIF                 | Reference images and their regions.                       |
+| CIDOC CRM and LRMoo  | Document the meaning of project types through mappings.   |
+| SHACL                | Compare approaches to validation; no shared shape format. |
+| TAG and ATAG         | Represent the internal structure of text as a graph.      |
+
+## TEI
+
+A project can keep TEI documents as content, map selected markup to RAMEN annotations, or combine both. Element names such as `persName` can provide annotation types. The project defines the mapping.
+
+[TEI](https://www.tei-c.org/release/doc/tei-p5-doc/en/html/index.html) also supports milestones and [standoff markup for overlapping structures](https://www.tei-c.org/release/doc/tei-p5-doc/en/html/NH.html). Separation of text and annotation is therefore available in both approaches. See the [TEI/XML example](/concepts/content#using-teixml-and-ramen).
+
+## W3C Web Annotation Data Model
+
+RAMEN uses the selector pattern from the [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/), including `TextPositionSelector` and `FragmentSelector`.
+
+The annotation structures differ. W3C annotations have targets and optional bodies. RAMEN uses `HAS_ANNOTATION` and `REFERS_TO` to connect annotations to editorial objects. Projects define annotation shapes. Provenance is not built into RAMEN's base types; see [Provenance](#provenance).
+
+## Provenance
+
+Projects declare the provenance properties they need. For annotations, we recommend these terms from the [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/#lifecycle-information):
+
+| Property   | Meaning                                                           | RAMEN data type |
+| ---------- | ----------------------------------------------------------------- | --------------- |
+| `creator`  | Person, organisation, or software responsible for the annotation. | `URI`           |
+| `created`  | Creation time.                                                    | `DateTime`      |
+| `modified` | Last modification time.                                           | `DateTime`      |
+
+`URI` and `DateTime` are supplied by the RAMEN reference model. A creator value identifies the agent by an absolute URI. For W3C exchange, timestamps must use UTC ending in `Z`; RAMEN's `DateTime` also accepts other timezone offsets.
+
+Declare shared properties on a refinement of `Annotation`, such as `EditorialAnnotation`, and use it for the relevant records. Properties needed only by particular annotation kinds can be declared in their shapes. Optional bounds allow records without provenance, including older imports.
+
+Tools should set these values when creating or changing annotations and preserve existing attribution on import. This requires explicit tool support. Mappings for other property names can be documented in [`ext`](/specification/reference-model#model-metadata); Core does not interpret them.
+
+`REFERS_TO` identifies an annotation's subject, so it should not record authorship. W3C's `generator` and `generated` describe the production of a serialisation, such as an export, rather than the annotation's original creation.
+
+## IIIF
+
+RAMEN content can reference an image delivered through [IIIF](https://iiif.io/api/), with selectors identifying regions. IIIF provides APIs for image delivery and presentation. RAMEN describes the image's connections to other objects in the edition.
+
+## CIDOC CRM and LRMoo
+
+Projects can document mappings between their types and classes in [CIDOC CRM](https://www.cidoc-crm.org/) or [LRMoo](https://cidoc-crm.org/extensions/lrmoo/html/LRMoo_v1.1.1.html). These ontologies describe cultural heritage and bibliographic concepts. A mapping depends on the meaning of the project type; refinement from a RAMEN base type does not establish that correspondence.
+
+## SHACL
+
+RAMEN project models and [SHACL](https://www.w3.org/TR/shacl/) both express constraints on recorded data. SHACL validates RDF graphs. RAMEN Core validates instances against project types, properties, and permitted connections in its own model format. RAMEN annotation shapes are not SHACL shapes. See [Validation](/specification/validation).
+
+## Text as Graph
+
+A content item can use a graph representation internally. [TAG](https://huygensing.github.io/TAG/) represents text, markup, and annotations in a directed property hypergraph. ATAG uses structures such as linked character nodes. They are distinct approaches; RAMEN does not prescribe either. The [ATAG example](/concepts/content#graph-serialised-text-with-atag) shows how a character chain connects to RAMEN objects.
+
+## Property Graphs and Linked Data
+
+RAMEN uses a property graph. Annotation nodes give editorial statements an identity, properties, and connections to further annotations. Entities can also carry identifiers from authority files such as GND or Wikidata. See [Connecting Authority Data](/concepts/knowledge#connecting-authority-data).
+
+RDF can also represent statements as resources. A mapping would need explicit rules for RAMEN identities, types, properties, and relationships. An RDF serialisation of RAMEN data is not part of the current specification.

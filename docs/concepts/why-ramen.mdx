@@ -1,0 +1,49 @@
+---
+title: Why RAMEN?
+description: Why editions need a shared model and how RAMEN supports project-specific choices.
+slug: /concepts/why-ramen
+---
+
+import Figure from "@site/src/components/Figure";
+
+# Why RAMEN?
+
+Digital scholarly editions work with different sources and research questions. Their data models need to reflect these differences. When tools depend on one project's model, however, reusing them in another edition can require substantial changes.
+
+RAMEN provides a shared reference model that projects refine for their material. It distinguishes content, collections, annotations, and entities. Projects define their own types, properties, and permitted connections within this structure.
+
+## Reusing Tools across Projects
+
+A letter and a regest organise different material, but both can be modelled as collections. Tools can use this shared basis while reading the project model for the types and connections it allows.
+
+<Figure
+  id="fig:shared-core"
+  number="1"
+  src="/images/concepts/shared-core.svg"
+  alt="Letter in a correspondence model, Regest in a regesta model, and GamePath in a books-of-fortune model each refine Collection. Only this part of the project models is shown."
+  caption="Different project types refine the same base type. Collection is shown as one example of the shared core."
+  width={700}
+  minWidth={600}
+/>
+
+This provides a basis for reuse; it does not by itself make every tool compatible with every project. An annotation editor still needs to know which property holds the text and which selectors it supports. See [Project-Specific Refinement](/concepts#project-specific-refinement).
+
+## Recording Statements as Annotations
+
+An identification can depend on a source, remain uncertain, or be disputed. RAMEN represents such statements as annotation nodes. Projects can give them properties for evidence or certainty, and editors can attach further annotations to them. A comment can therefore question an identification while preserving the original statement.
+
+Annotations remain separate from the content they describe. Several annotations can refer to the same or overlapping passages. This lets editors record different interpretations without changing the source text. See [Modelling Knowledge](/concepts/knowledge#commenting-on-statements).
+
+## Scope
+
+RAMEN describes how editorial objects connect. Projects define what their types mean and can relate them to existing vocabularies or ontologies. They can also retain TEI documents or reference images through IIIF. The [related standards](/concepts/related-standards) page explains these relationships.
+
+RAMEN specifies models and exchange formats. Storage, interfaces, and editorial workflows belong to the tools; [RAMEN Core](/specification/validation) provides validation against the declared model.
+
+## AI-Assisted Editing
+
+AI-generated transcriptions, name annotations, or identifications need to fit the project's data model. Validation can check their structure. It does not establish whether a reading or identification is correct.
+
+Stored as annotations, suggestions can receive editorial comments or reviews. Projects can declare [provenance properties](/concepts/related-standards#provenance) so that each suggestion records the software that created it and when. Confidence values remain a project choice.
+
+Tools must also check that a suggested passage matches the source and compute its selector against the correct [content revision](/concepts/content#editing-annotated-content). Applications can then retrieve and cite connected passages. Whether those passages support an answer still requires review.

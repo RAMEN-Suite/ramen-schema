@@ -1,6 +1,6 @@
 ---
 title: Capturing Content
-description: How content-bearing nodes store, reference, and annotate textual, visual, and other editorial material in RAMEN.
+description: How RAMEN stores or references source material and connects it to annotations.
 slug: /concepts/content
 ---
 
@@ -8,161 +8,152 @@ import Figure from "@site/src/components/Figure";
 
 # Capturing Content
 
-Content in RAMEN describes material that can be captured, referenced, edited, annotated, and published. A `Content` node may store text, reference an image or provide another machine-readable representation used by a project.
+A `Content` node stores or references material such as a transcription, an image, or an encoded document. Collections organise this material; annotations add structure, interpretation, or commentary.
 
-`Content` nodes are _deliberately simple_. They do not define the whole editorial meaning of an object on their own. Their editorial role is created through contextual structures and annotations: a text may become the text of a witness through `PART_OF`, and it may receive interpretation, classification, or commentary through `HAS_ANNOTATION`.
-
-:::note
-_Serialised material_ means material that is stored or referenced in a **concrete digital form**, such as plain text, a URL, an external file reference, or another representation that a project can process.
-:::
+For example, a transcription can belong to a witness through `PART_OF`. An annotation attached through `HAS_ANNOTATION` can mark a name or comment on a passage.
 
 <Figure
   id="fig:content"
   number="1"
-  src="/images/concepts/part-content.png"
-  alt="Content modelling with Content and Annotation nodes"
-  caption="Content modelling with Content and Annotation nodes"
-  width={640}
+  src="/images/concepts/part-content.svg"
+  alt="Content is PART_OF a Collection and HAS_ANNOTATION an Annotation."
+  caption="Content is connected to its editorial context and its annotations."
+  width={700}
 />
 
-## Content Nodes
+## Choosing Content Properties
 
-`Content` nodes represent serialised or addressable material. A refined `Content` node may, for example, be called `Text` or `Image`, but RAMEN does not bind specific media types to these labels. What matters is that the node remains recognisable as a `Content` node, so tools can rely on the RAMEN base type while projects can define more specific content-bearing roles.
+Projects can refine `Content` into types such as `Text` or `Image`. They define the properties that store or reference the material. These names and properties are project choices; RAMEN does not prescribe them.
 
-The attributes used to capture material depend on the content type and the used [tools](/tools). For textual content, a project model may define a `text` attribute. For image content, a `url` attribute. Other media or data types may use different attributes.
+| Example type | Example property | What it holds                    |
+| ------------ | ---------------- | -------------------------------- |
+| `Text`       | `text`           | The transcription as plain text. |
+| `Image`      | `url`            | A link to an image.              |
 
-:::warning
-A project model _should_ define the expected attributes for its content types in advance. Different tools **may require different attributes** depending on the workflow; these requirements should be specified **before data capture begins**.
+:::note[Tool requirements]
 
-A project may define a `text` property for transcriptions and a `url` property for images. An annotation can use a selector that the relevant tool interprets against that content.
+Agree on these properties with the tools that will capture and display the content. A tool needs to know which property contains the text or image reference.
+
 :::
 
-## Content and Annotations
+## Annotating Text and Images
 
-Content and annotations are **closely connected** in RAMEN. A `Content` node carries the material, while `Annotation` nodes add editorial information to it. This can include interpretation, structural markup, classification, or references to other elements.
+`HAS_ANNOTATION` attaches an annotation to an object. An optional **selector** identifies the passage or region it describes. Without a selector, the annotation describes the whole object.
 
-A `HAS_ANNOTATION` link attaches an annotation to a content-bearing node. A recorded annotation can have a `selector` to identify a particular part of that content. RAMEN uses the selector pattern from the [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/#selectors). The examples show selected properties of recorded nodes, with links drawn as arrows.
+The text and image examples first show **where** an annotation applies. Their property excerpts omit identifiers and the annotation's own `type`. Complete records still require a project-declared annotation type. A selector's `type` specifies how a passage or region is located; it does not classify the annotation.
 
-:::info
-The `type` property identifies the annotation shape declared by the project. Several shapes can use the same `Annotation` node type. A shape can define additional properties and constrain the attachments and references allowed for annotations of that type.
-:::
+### Capturing Plain Text
 
-## Examples of Capturing Content
-
-The following examples show how `Content` nodes can be refined, how material can be captured and annotated, and how existing encodings or more granular serialisations can be integrated into RAMEN.
-
-:::note
-The examples below describe **methods to capture, import and annotate content**. They are **not intended as best practices**, but illustrate possible modelling and methodology choices that may differ between projects and tools.
-:::
-
-### Capturing Different Content Types
-
-This section shows how different kinds of material can be captured in refined `Content` nodes.
-
-#### Capturing Plain Text
-
-A project may capture textual material in a refined `Content` node such as `Text`. The text itself can be stored in a `text` attribute, while structural, interpretive, or classificatory information is represented separately as `Annotation` nodes.
-
-These annotations can describe the whole content node or specific text ranges. A [`TextPositionSelector`](https://www.w3.org/TR/annotation-model/#text-position-selector) identifies a text range using `start` and `end` offsets. Figure 2 selects the first five characters of “plain text”. This makes it possible to attach paragraphs, headings, quotations, names, corrections, comments, or other editorial information to the same textual content through `HAS_ANNOTATION`.
+A `TextPositionSelector` identifies a text range by its `start` and `end` positions. Counting starts at zero; the end position is excluded. In “plain text”, positions `0` to `5` select “plain”.
 
 <Figure
   id="fig:capturing-text"
   number="2"
   src="/images/concepts/example-capturing-text.svg"
-  alt="A TextPositionSelector marks the first five characters of the text"
-  caption="A TextPositionSelector marks the first five characters of the text"
-  width={720}
+  alt="Text contains plain text. An annotation uses a TextPositionSelector with start 0 and end 5 to select plain. The annotation type is omitted from this excerpt."
+  caption="A selector locates the annotated passage in the text."
+  width={700}
 />
 
-#### Capturing Images
+:::note[Text positions across tools]
 
-A project may capture image-based material in a refined `Content` node such as `Image`. The image itself may be referenced through a `url` attribute or another project-defined attribute.
+The [W3C text-position convention](https://www.w3.org/TR/annotation-model/#text-position-selector) counts Unicode codepoints, not UTF-16 code units or displayed graphemes. It uses extracted text with markup removed and character entities resolved; selections should respect grapheme boundaries.
 
-Annotations can then describe the whole image or a specific region of it. A [`FragmentSelector`](https://www.w3.org/TR/annotation-model/#fragment-selector) can specify a rectangular region with `xywh` coordinates. Tools can interpret other selector types for shapes such as polygons. See the [Core selector guide](https://ramen-suite.github.io/ramen-core/guides/ramen/selectors.html).
+For exchange, tools also need to agree on the exact text, Unicode normalisation, and treatment of whitespace and line endings. Core stores the selector but does not enforce these conventions or normalise the content. The ASCII examples here give the same offsets under these different counting methods.
 
-As with text, the `Image` node carries or references the material, while `Annotation` nodes add structure, classification, interpretation, or links to other editorial objects.
+:::
+
+Several annotations can describe the same or overlapping passages. Paragraphs, quotations, corrections, and different interpretations can therefore refer to the same text.
+
+### Capturing Images
+
+An image annotation can identify a region with a `FragmentSelector`. The value `xywh=50,40,120,90` describes a rectangle: `x` and `y` locate its top-left corner, and `w` and `h` give its width and height, in pixels.
 
 <Figure
   id="fig:capturing-image"
   number="3"
   src="/images/concepts/example-capturing-image.svg"
-  alt="A FragmentSelector marks a rectangular region of the image"
-  caption="A FragmentSelector marks a rectangular region of the image"
-  width={720}
+  alt="An Image has an annotation whose selector uses FragmentSelector with value xywh=50,40,120,90. The rectangle starts at 50,40 and is 120 pixels wide and 90 pixels high."
+  caption="A fragment selector describes a rectangular image region."
+  width={700}
 />
 
-### Working with Content Annotations
+For this fragment syntax, W3C recommends `conformsTo: "http://www.w3.org/TR/media-frags/"` in the selector object. It identifies the [Media Fragments specification](https://www.w3.org/TR/annotation-model/#fragment-selector). Core preserves this field but does not require or interpret it. The illustration includes this syntax identifier.
 
-This section shows how annotations attached to content can be typed and linked to other editorial objects.
+RAMEN follows the selector idea from the [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/#selectors). The tool interprets and checks the selector details, including whether a selection fits the content. See the [Core selector guide](https://ramen-suite.github.io/ramen-core/guides/ramen/selectors.html) for the stored format and validation limits.
 
-#### Typing Content Annotations
+## Typing Content Annotations
 
-Annotations attached to content can often remain general `Annotation` nodes. Their specific meaning can be expressed through the `type` attribute. For example, a TEI [persName](https://www.tei-c.org/release/doc/tei-p5-doc/de/html/ref-persName.html) annotation can be represented as an `Annotation` with `type: "persName"` attached to a content-bearing node.
+An annotation's `type` describes the kind of editorial annotation. A project can use a name such as TEI's [`persName`](https://tei-c.org/release/doc/tei-p5-doc/en/html/ref-persName.html) for a name occurrence. This remains an `Annotation` node; it does not require a separate node type for each kind of annotation.
 
 <Figure
   id="fig:typed-annotation"
   number="4"
   src="/images/concepts/example-typed-annotation.svg"
-  alt="Name annotation with a project-defined persName type and a text selector"
-  caption="Name annotation with a project-defined persName type and a text selector"
-  width={800}
+  alt="The shared Annotation node has type persName. Its nested selector has type TextPositionSelector and selects Gaius at positions 0 to 5."
+  caption="persName is the annotation type; TextPositionSelector is the selector type. They serve different purposes."
+  width={700}
 />
 
-Depending on the project model and tool support, annotation types may also define different expected properties, validation rules, or editing forms. A `persName` annotation may therefore require different information than a `commentary` annotation, even if both remain general `Annotation` nodes.
+In the current Core format, the annotation's `type` selects a project-declared **annotation shape**. The shape defines additional properties and permitted connections for that kind of annotation. It is separate from the node's modelled type and the selector's type.
 
-:::tip
-Refine the node when the model needs a distinct family such as `TextAnnotation` or `ImageAnnotation`. Declare an annotation shape for each kind of annotation the project records. Several shapes can use the same node type.
-:::
+## Linking Content Annotations
 
-#### Linking Content Annotations
-
-Annotations on content can also create connections to other editorial objects. A `Text` node may `HAS_ANNOTATION` an annotation with `type: "persName"`, and this annotation may `REFERS_TO` a `Person` entity.
-
-In this pattern, the content, the annotation, and the entity remain separate. The `Text` node carries the written form, the annotation marks and classifies the occurrence, and the `Person` entity represents the identified person. This allows the same content to remain readable as text while its editorial interpretation becomes explicit in the graph.
+An annotation can also refer to another editorial object. For example, a `persName` annotation marks the name in “Gaius has …” and uses `REFERS_TO` to identify the person, `Gaius van B.`. A project can require that reference through the annotation shape.
 
 <Figure
   id="fig:refers-entity"
   number="5"
   src="/images/concepts/example-content-refers-entity.svg"
-  alt="Content annotation referring to a Person entity"
-  caption="Content annotation referring to a Person entity"
-  width={800}
+  alt="A persName annotation selects Gaius in Gaius has … and REFERS_TO a Person entity labelled Gaius van B."
+  caption="The text contains the written name; the annotation marks its occurrence; the entity represents the person."
+  width={700}
 />
 
-### Serialising and Reusing Existing Content
+The same `Person` can be linked to mentions in other texts. The project can also use the shared `Annotation` node type for commentary or other shapes with different rules. Refining it into a separate node type is optional.
 
-This section shows how existing encodings or more granular serialisations can be used together with RAMEN `Content` nodes.
+See the [reference model](/specification/reference-model#annotation-shapes-and-selectors) for shapes and selectors, and [Modelling Knowledge](/concepts/knowledge) for statements about entities.
 
-#### Using TEI/XML and RAMEN
+## Editing Annotated Content
 
-A project may capture textual content by transforming existing [TEI/XML](https://www.tei-c.org/) into a RAMEN-compatible graph structure. In this pattern, the plain text is stored in refined `Content` nodes, while selected TEI/XML encoding information is transformed into RAMEN `Annotation` nodes.
+Changing a transcription can move or remove the passage an annotation selects. For example, inserting text before “Gaius” makes the old `0–5` selector point somewhere else. The [W3C model](https://www.w3.org/TR/annotation-model/#text-position-selector) also identifies this limitation of position selectors.
+
+Tools need to retain the text revision used by each annotation. They can keep immutable content records or use a separate revision store. When text is edited in place, selectors need to be recalculated and checked; ambiguous matches need editorial review. A project can record the selected quote and its context to help locate a passage again.
+
+RAMEN's reference model and Core do not provide a data revision store or automatic selector migration. A valid selector object alone does not establish that it still points to the intended passage.
+
+## Reusing Existing Content
+
+The following approaches are modelling options. Projects choose what to keep in an existing format and what to represent as separate RAMEN objects.
+
+### Using TEI/XML and RAMEN
+
+A project can reference an existing [TEI/XML](https://www.tei-c.org/) document and keep its encoding. Alternatively, it can extract text and map selected markup to annotations. The following example maps an `rs` element with `type="person"` and a `ref="#hevelius"` reference to an annotation of type `person` and a person entity. This preserves the type from the TEI example; it is a different project choice from `persName` above. The fragment reference points to a person entry with `xml:id="hevelius"` elsewhere in the TEI document; that entry is not shown here.
 
 <Figure
   id="fig:tei-convert"
   number="6"
   src="/images/concepts/example-tei-content.svg"
-  alt="Transforming TEI/XML encoding into RAMEN content, annotation, and entity nodes"
-  caption="Transforming TEI/XML encoding into RAMEN content, annotation, and entity nodes"
-  width={800}
+  alt="TEI input uses rs with type person and ref #hevelius. It maps to plain text, an annotation of type person selecting positions 9 to 17, and a Person labelled Hevelius."
+  caption="One possible mapping from TEI/XML to RAMEN. The selector positions refer to the extracted text."
+  width={700}
+  minWidth={600}
 />
 
-:::info
-This follows the same general principle as _TEI/XML standoff markup and annotations_ ([cf. Palladino et al. 2020](https://ceur-ws.org/Vol-3110/paper8.pdf)): textual content and annotation information are kept separate, while a `TextPositionSelector` locates the annotated passage in the extracted text. **[TEI](https://www.tei-c.org/) can serve as one possible vocabulary** for these annotations, but other vocabularies or project-specific annotation types can also be used.
-:::
+Keeping text and annotation separate follows the general principle of standoff markup ([cf. Palladino et al. 2020](https://ceur-ws.org/Vol-3110/paper8.pdf)). TEI element names or attribute values can provide a vocabulary for annotations; each project still defines its shapes and mapping rules. The example shows selected markup, rather than a complete TEI conversion.
 
-Alternatively, a refined `Content` node may reference an existing TEI/XML document as an external resource, if the encoded document should remain the primary representation.
+### Graph-Serialised Text with ATAG
 
-#### Graph-Serialised Text with ATAG
-
-Some workflows need more granular text structures than a single `text` attribute can provide. In such cases, _Applied Text as Graph_ (ATAG) provides a RAMEN-compatible graph serialisation for the internal structure of textual content ([cf. Kuczera 2025](https://doi.org/10.4000/14vyl)). ATAG can represent a text as a **chain of character or token nodes**, so that very small textual units become **directly addressable** for editing, annotation, citation, or computational processing.
+Some projects need to address individual characters or tokens. _Applied Text as Graph_ (ATAG) represents these as linked nodes ([cf. Kuczera 2025](https://doi.org/10.4000/14vyl)).
 
 <Figure
   id="fig:atag"
   number="7"
-  src="/images/concepts/example-atag.png"
-  alt="ATAG-style graph serialisation connected to a RAMEN content annotation"
-  caption="ATAG-style graph serialisation connected to a RAMEN content annotation"
-  width={450}
+  src="/images/concepts/example-atag.svg"
+  alt="A Text content node leads to the ATAG character chain t, e, x, t. An annotation points to the first and last characters through STANDOFF_START and STANDOFF_END."
+  caption="An ATAG character chain connected to RAMEN content and annotation."
+  width={700}
+  minWidth={600}
 />
 
-In this pattern, the RAMEN `Content` node remains the **content-bearing entry point** for the project model. ATAG specialises the content layer with a more detailed internal representation of the text. Relations such as `STANDOFF_START` and `STANDOFF_END` belong to the ATAG serialisation, while RAMEN-based tools can rely on the `Content` node and `HAS_ANNOTATION` relation at the shared model level.
+The RAMEN `Content` node provides access to the text. ATAG describes its internal structure. In this pattern, the character nodes and `STANDOFF_START` and `STANDOFF_END` links are managed by the tool and excluded from the instance graph passed to RAMEN Core. Core validates the RAMEN objects and their declared relationships; the tool checks the ATAG chain and its anchors separately.
