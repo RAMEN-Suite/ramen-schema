@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 600 400">
   <title>Annotating a letter in Miso</title>
-  <desc>In the transcription editor, Frau Kommerzienrat is selected and linked to the person Antje Brons.</desc>
+  <desc>The address Frau Kommerzienrat is annotated as a person reference, corresponding to TEI rs type person, and linked to Antje Brons.</desc>
   <defs>
     <pattern id="grid" width="14" height="14" patternUnits="userSpaceOnUse">
       <circle cx="7" cy="7" r=".85" fill="#d9d9dd"/>
@@ -30,11 +30,11 @@
     <circle cx="251" cy="253" r="3" fill="#7a0712"/>
     <rect x="382" y="170" width="172" height="137" rx="7" fill="#fff" stroke="#98b29d" stroke-width="1.5"/>
     <rect x="395" y="183" width="96" height="24" rx="4" fill="#edf3ee"/>
-    <text x="443" y="200" fill="#205135" font-size="14" font-weight="700" text-anchor="middle">persName</text>
+    <text x="443" y="200" fill="#205135" font-size="14" font-weight="700" text-anchor="middle">person</text>
     <text x="395" y="231" fill="#52525b" font-size="14" font-weight="650">Linked person</text>
     <rect x="395" y="244" width="146" height="42" rx="5" fill="#f3f8fc" stroke="#cbdfed"/>
     <circle cx="410" cy="265" r="3" fill="#5592bf"/>
-    <text x="421" y="270" fill="#0b0d16" font-size="15" font-weight="650">Brons Antje</text>
+    <text x="421" y="270" fill="#0b0d16" font-size="15" font-weight="650">Antje Brons</text>
   </g>
 
   <path d="M308 270l4 27 7-8 6 11 5-3-6-11 10-1Z" fill="#0b0d16" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>

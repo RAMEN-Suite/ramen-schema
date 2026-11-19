@@ -7,16 +7,17 @@ import styles from "./index.module.css";
 
 export default function Home(): ReactNode {
   return (
-    <Layout description="RAMEN Schema connects collections, content, annotations, and entities in digital scholarly editions.">
+    <Layout description="RAMEN is a shared model for digital scholarly editions. Define how sources, annotations, and entities connect, and use your project model across editorial tools.">
       <main>
         <header className={`hero-banner ${styles.hero}`}>
           <div className="container">
             <Heading as="h1" className={styles.title}>
               RAMEN Schema
             </Heading>
-            <p className={styles.subtitle}>Structure, Connect, and Publish Digital Scholarly Data</p>
+            <p className={styles.subtitle}>A shared model for digital scholarly editions</p>
             <p className={styles.description}>
-              RAMEN is a shared model for connecting sources, collections, annotations, and entities in digital research projects.
+              RAMEN connects content, collections, annotations, and entities in a model that projects adapt to their editorial
+              needs.
             </p>
             <div className={styles.actions}>
               <Link className="button button--secondary" to="/concepts">

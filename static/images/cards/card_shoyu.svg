@@ -44,7 +44,7 @@
     <path d="M304 266h61" stroke="#b96068" stroke-width="1.5" stroke-dasharray="4 3"/>
     <rect x="365" y="237" width="183" height="82" rx="7" fill="#fff" stroke="#d9d9dd"/>
     <text x="380" y="262" fill="#7a0712" font-size="13" font-weight="700">Person</text>
-    <text x="380" y="288" fill="#0b0d16" font-size="17" font-weight="700">Brons Antje</text>
+    <text x="380" y="288" fill="#0b0d16" font-size="17" font-weight="700">Antje Brons</text>
     <g fill="none" stroke="#7a0712" stroke-width="1.5" stroke-linecap="round">
       <circle cx="512" cy="277" r="3.5"/>
       <path d="M505 289v-1a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v1"/>

@@ -5,22 +5,22 @@ import styles from "./styles.module.css";
 
 const tools = [
   {
-    title: "Modelling your data",
-    description: "Define node types and relationships with Nori.",
+    title: "Model with Nori",
+    description: "Define the types, properties, relationships, and validation rules your project needs.",
     image: "/images/cards/card_nori.svg",
-    alt: "A pointer highlights the Annotation node and its connection to Text in Nori",
+    alt: "Text has an Annotation, used directly from RAMEN, which refers to a Person in Nori",
     to: "/tools/nori",
   },
   {
-    title: "Capturing and linking content",
-    description: "Annotate sources and link them to entities with Miso.",
+    title: "Annotate with Miso",
+    description: "Capture content, annotate passages and image regions, and link them to entities.",
     image: "/images/cards/card_miso.svg",
     alt: "A selected phrase in Miso is linked to the person Antje Brons",
     to: "/tools/miso",
   },
   {
-    title: "Publishing digital editions",
-    description: "Publish editions with data readers can explore in Shoyu.",
+    title: "Publish with Shoyu",
+    description: "Publish an edition whose content, annotations, and connections readers can explore.",
     image: "/images/cards/card_shoyu.svg",
     alt: "A published letter in Shoyu with a linked person record and a graph of related records",
     to: "/tools/shoyu",

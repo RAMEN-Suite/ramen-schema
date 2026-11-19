@@ -25,36 +25,6 @@ Please cite RAMEN as follows:
 
 Machine-readable citation metadata is available in [`CITATION.cff`](./CITATION.cff). See the website's [Citation](https://ramen-schema.org/citation) page for BibTeX.
 
-## Installation
-
-### Requirements
-
-- Node.js `>=22.18.0`
-- npm
-
-Check your local versions:
-
-```bash
-node --version
-npm --version
-```
-
-Install dependencies:
-
-```bash
-npm ci
-```
-
-## Usage
-
-Start the local development server:
-
-```bash
-npm start
-```
-
-This opens the documentation site in your browser. Most changes to Markdown, React components, and configuration files are reflected automatically while the development server is running.
-
 ## Configuration
 
 The main configuration files are:
@@ -78,11 +48,13 @@ docs/
 
 ## Development
 
-Clone the repository:
+Use Node.js `>=22.18.0` and npm. Clone the repository and select the Node version used by CI:
 
 ```bash
-git clone <repository-url>
-cd <repository-name>
+git clone https://github.com/RAMEN-Suite/RAMEN-Schema.git
+cd RAMEN-Schema
+nvm install
+nvm use
 ```
 
 Install dependencies:
@@ -96,6 +68,17 @@ Start local development:
 ```bash
 npm start
 ```
+
+The development server opens the site in your browser and reloads when documentation or components change.
+
+Check formatting and TypeScript before building:
+
+```bash
+npm run format
+npm run typecheck
+```
+
+Use `npm run format:fix` to format documentation, source code, and configuration files.
 
 Create a production build:
 
@@ -115,19 +98,20 @@ The generated static site is written to:
 build/
 ```
 
-Concept figures live in `static/images/concepts/`. The selector example SVGs include editable draw.io data. To make a change, open the SVG in draw.io and export it again with **Include a copy of my diagram** enabled.
+Concept and specification diagrams are editable SVGs in `static/images/concepts/` and `static/images/specification/`. Keep their round nodes, base-type colours, soft arrow paths, outer frames, and subtle worn texture consistent. Place relationship labels clear of arrow paths and node borders. Presentation changes must preserve project type names, refinement relationships, annotation `type` values, and property nesting. Keep annotation types distinct from selector types. Content is green, collections violet, annotations ochre, and entities red. Background areas mark the modelling perspective: content is green, context violet, and knowledge pink. Annotations can appear in any of these areas; show only the areas relevant to the example.
 
 ## Publishing specifications
 
 `npm start` and `npm run build` automatically run `npm run schemas:export`. The script reads the JSON schemas bundled with the locked version of `@ramen-suite/core` and copies each file byte for byte to the path declared by its `$id` on `https://ramen-schema.org`. It also writes the reference model exported by Core and generates the catalogue for the Specification page.
 
-GitHub Actions runs the production build and publishes the full `build/` directory to GitHub Pages. To update Core, run `npm install --save-dev --save-exact @ramen-suite/core@<version>` and commit both package files. If a new format supersedes a published `$id`, keep the previously published JSON at its original path under `static/`.
+GitHub Actions checks formatting and TypeScript, runs the production build, and publishes the full `build/` directory to GitHub Pages. Broken internal links and anchors fail the build. To update Core, run `npm install --save-dev --save-exact @ramen-suite/core@<version>` and commit both package files. If a new format supersedes a published `$id`, keep the previously published JSON at its original path under `static/`.
 
 ## Project Structure
 
 ```text
 .
 ├── docs/                  # Documentation pages
+├── scripts/               # Schema and reference model export
 ├── src/                   # Custom React components and CSS
 ├── static/                # Static assets such as logos and images
 ├── docusaurus.config.ts   # Main Docusaurus configuration

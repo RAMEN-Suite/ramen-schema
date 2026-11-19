@@ -5,12 +5,24 @@ const sidebars: SidebarsConfig = {
     {
       type: "category",
       label: "Concepts",
-      items: ["concepts/overview", "concepts/context", "concepts/content", "concepts/knowledge"],
+      items: [
+        "concepts/overview",
+        "concepts/why-ramen",
+        "concepts/context",
+        "concepts/content",
+        "concepts/knowledge",
+        "concepts/related-standards",
+      ],
     },
     {
       type: "category",
       label: "Specification",
-      items: ["specification/overview"],
+      items: [
+        "specification/overview",
+        "specification/reference-model",
+        "specification/json-schemas",
+        "specification/validation",
+      ],
     },
     {
       type: "category",
@@ -18,8 +30,9 @@ const sidebars: SidebarsConfig = {
       link: {
         type: "generated-index",
         slug: "/tools",
+        description: "Tools for modelling, capturing, linking, and publishing RAMEN data.",
       },
-      items: ["tools/nori", "tools/miso", "tools/tori", "tools/shoyu"],
+      items: ["tools/nori", "tools/miso", "tools/shoyu"],
     },
     "examples",
     "publications",

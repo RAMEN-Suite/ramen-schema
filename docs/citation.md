@@ -1,6 +1,6 @@
 ---
 title: How to Cite RAMEN
-description: Recommended citations for the RAMEN model, website, and released versions.
+description: Recommended citation for the RAMEN model and website.
 slug: /citation
 ---
 
