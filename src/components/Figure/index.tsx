@@ -6,6 +6,7 @@ type FigureProps = {
   number: number | string;
   src: string;
   width?: number;
+  minWidth?: number;
   alt: string;
   caption: ReactNode;
 };
@@ -22,7 +23,19 @@ export function FigRef({ id, children }: FigRefProps): ReactNode {
 export default function Figure(props: FigureProps): ReactNode {
   return (
     <figure id={props.id} className={styles.figure}>
-      <img className={styles.image} src={props.src} alt={props.alt} style={{ maxWidth: props.width }} />
+      <div
+        className={styles.viewport}
+        tabIndex={props.minWidth ? 0 : undefined}
+        role={props.minWidth ? "region" : undefined}
+        aria-label={props.minWidth ? "Scrollable diagram" : undefined}
+      >
+        <img
+          className={styles.image}
+          src={props.src}
+          alt={props.alt}
+          style={{ maxWidth: props.width, minWidth: props.minWidth }}
+        />
+      </div>
       <figcaption className={styles.caption}>
         Figure {props.number}. {props.caption}
       </figcaption>

@@ -1,43 +1,30 @@
 ---
 title: Specification
-description: The RAMEN reference model and the versioned JSON schemas shipped by RAMEN Core.
+sidebar_label: Overview
+description: Understand the RAMEN reference model, choose a JSON schema, and validate your data.
 slug: /specification
 ---
 
-import specification from '@site/.generated/specifications.json';
-
 # Specification
 
-RAMEN Core implements the RAMEN reference model and the RAMEN Model Format (RMF). The [npm package `@ramen-suite/core`](https://www.npmjs.com/package/@ramen-suite/core) includes the modelling API and the JSON schemas published on this page. The [Core guides](https://ramen-suite.github.io/ramen-core/) cover model creation, exchange, and validation.
+The specification defines the shared RAMEN types, their relationships, and the file formats used to exchange models and data. A project model builds on these definitions and specifies its own types, properties, and validation rules.
+
+## Find what you need
+
+| Topic                                             | What you will find                                                                      |
+| ------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| [Reference model](/specification/reference-model) | Base node types, inherited properties, relationships, and project-specific refinements. |
+| [JSON schemas](/specification/json-schemas)       | Help choosing a schema, download links, and file formats.                               |
+| [Validation](/specification/validation)           | Checks for document structure, property values, and allowed connections.                |
+
+For an introduction with illustrations, start with [What is RAMEN?](/concepts). To create a model visually, use [Nori](/tools/nori).
+
+## Using RAMEN Core
+
+The npm package [`@ramen-suite/core`](https://www.npmjs.com/package/@ramen-suite/core) implements the reference model and the RAMEN Model Format (RMF). It includes the schemas published here and APIs for creating, exchanging, and validating models.
 
 ```sh
 npm install @ramen-suite/core
 ```
 
-## Reference model
-
-The <a href={specification.referenceModel}>RAMEN reference model</a> defines the four base node types and their relationships. RAMEN Core exports it as `RAMEN_MODEL` from `@ramen-suite/core/ramen`. A RAMEN project starts from this model and declares the types, relationships, and annotation shapes it uses.
-
-## JSON schemas
-
-These files ship with <code>@ramen-suite/core@{specification.coreVersion}</code>. Each link resolves to the canonical URL declared in the schema's `$id`. The same files are available locally at `@ramen-suite/core/schemas/<filename>`.
-
-<table>
-  <thead>
-    <tr><th scope="col">Canonical schema</th><th scope="col">Package filename</th></tr>
-  </thead>
-  <tbody>
-    {specification.schemas.map(({ filename, path, title }) => (
-      <tr key={path}>
-        <td><a href={path}>{title}</a></td>
-        <td><code>{filename}</code></td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-
-Use a **model schema** for a single model level. Use a **file schema** to exchange a model together with its predecessors and their declarations. Use the **instance graph schema** for recorded nodes and relationships. The **annotation definitions schema** describes the annotation shapes declared by a project.
-
-JSON Schema checks the document structure. RAMEN Core also resolves references and checks recorded data against the project model, including allowed relationships, cardinalities, and annotation shapes.
-
-The Core package, document formats, and RAMEN reference model have independent versions. See the [JSON Schemas guide](https://ramen-suite.github.io/ramen-core/guides/schemas.html) for the format and package conventions.
+The [RAMEN Core guides](https://ramen-suite.github.io/ramen-core/) explain how to use these APIs in your application.

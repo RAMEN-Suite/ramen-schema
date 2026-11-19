@@ -25,7 +25,7 @@ const schemas = await Promise.all(
   files.map(async (filename) => {
     const contents = await readFile(join(schemaDirectory, filename));
     const schema = JSON.parse(contents.toString("utf8"));
-    return { filename, path: publicPath(schema.$id), title: schema.title ?? filename, contents };
+    return { filename, id: schema.$id, path: publicPath(schema.$id), title: schema.title ?? filename, contents };
   }),
 );
 
@@ -51,7 +51,7 @@ await Promise.all(
 const catalog = {
   coreVersion: corePackage.version,
   referenceModel: referenceModel.path,
-  schemas: schemas.map(({ filename, path, title }) => ({ filename, path, title })),
+  schemas: schemas.map(({ filename, id, path, title }) => ({ filename, id, path, title })),
 };
 await writeFile(join(generated, "specifications.json"), JSON.stringify(catalog, null, 2) + "\n");
 console.log(`Exported ${schemas.length} JSON schemas and the RAMEN reference model from Core ${corePackage.version}.`);

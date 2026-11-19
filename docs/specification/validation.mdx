@@ -1,0 +1,72 @@
+---
+title: Validation
+description: Check document structure, project model rules, and recorded RAMEN data.
+---
+
+import Figure from "@site/src/components/Figure";
+
+# Validation
+
+Validation checks document structure, model definitions, and recorded data. RAMEN Core provides these checks. Passing validation means the data follows the declared rules; scholarly accuracy still requires editorial review.
+
+## Check the document structure
+
+JSON Schema checks required fields, value types, and other structural constraints. Start with the [schema for your document](/specification/json-schemas).
+
+For example, a schema can require a field to contain a string. Checking a recorded relationship also requires the project model that defines its allowed source and target types.
+
+## Check the project model
+
+RAMEN Core resolves references between model elements and checks the model's declarations. This includes imported models, inherited definitions, relationship restrictions, and annotation shapes.
+
+A RAMEN project must import the RAMEN reference model, either directly or through another model. The models it depends on must be available for these checks.
+
+## Check recorded data
+
+RAMEN Core checks recorded nodes and relationships against a valid project model. This includes required properties, data types, keys, constraints, allowed relationships, cardinalities, and annotation shapes.
+
+### Property values
+
+Different rules answer different questions:
+
+| Rule           | Example project requirement                                        | What fails the rule                          |
+| -------------- | ------------------------------------------------------------------ | -------------------------------------------- |
+| Required value | A `Letter` must have one `title`.                                  | The title is missing.                        |
+| Data type      | A `score` must be a `Float`.                                       | The value is the string `"high"`.            |
+| Constraint     | A title must contain at least one character.                       | The value is the empty string `""`.          |
+| Constraint     | A score must be between `0` and `1`.                               | The value is `1.5`.                          |
+| Key            | A `uuid` must be unique within its declaring type and refinements. | Two records in that scope use the same UUID. |
+
+Requiring a string does not by itself exclude an empty string. A length constraint supplies that additional rule. The [Core constraint guide](https://ramen-suite.github.io/ramen-core/guides/rmf/constraint-languages.html) explains how to declare and evaluate these rules.
+
+### Connections
+
+For example, a project can require each `Witness` to belong to exactly one `Letter`. The figure compares one permitted connection with two connections that violate this rule. A witness without a letter would also fail validation, though that case is not shown.
+
+<Figure
+  id="fig:cardinality-validation"
+  number="1"
+  src="/images/specification/cardinality-validation.svg"
+  alt="The project requires each Witness to be part of exactly one Letter. A witness linked to one letter satisfies this rule. A witness linked to two letters violates it."
+  caption="The same project rule is applied to two examples of recorded data."
+  width={700}
+  minWidth={600}
+/>
+
+Checks involving connection counts or key uniqueness need the complete graph being validated. An isolated record or a new link alone does not provide that context.
+
+Core reports findings with diagnostic codes, severities, and paths to the affected data. See [Validate Models and Data](https://ramen-suite.github.io/ramen-core/guides/rmf/validation.html) and [Read Diagnostics](https://ramen-suite.github.io/ramen-core/guides/rmf/diagnostics.html) for the APIs and handling of results.
+
+## Understand versions
+
+Three version numbers describe different parts of the system.
+
+| Version                       | What it identifies                                 |
+| ----------------------------- | -------------------------------------------------- |
+| Core package version          | The installed release of `@ramen-suite/core`.      |
+| Document format version       | The format selected by a document's `$schema` URL. |
+| RAMEN reference model version | The shared model a project builds on.              |
+
+These versions are independent. When exchanging a document, check its schema URL and model imports as well as the Core version used by your application.
+
+The [Core JSON Schemas guide](https://ramen-suite.github.io/ramen-core/guides/schemas.html) provides the format and package conventions.

@@ -1,0 +1,85 @@
+---
+title: JSON schemas
+description: Choose and download a schema for RAMEN models, exchanged files, or recorded data.
+---
+
+import specification from "@site/.generated/specifications.json";
+import CodeBlock from "@theme/CodeBlock";
+
+# JSON schemas
+
+A JSON schema describes the structure a JSON document must follow, including required fields and value types. Choose a schema according to what your document contains. Checking recorded values and connections against your project model also requires [model-based validation](/specification/validation).
+
+## Choose a schema
+
+| Your document contains                                                          | Package filename                |
+| ------------------------------------------------------------------------------- | ------------------------------- |
+| A single RAMEN project model, including its annotation shapes                   | `ramen-project.schema.json`     |
+| A RAMEN model together with the models it builds on, for exchange between tools | `ramen-file.schema.json`        |
+| Recorded nodes and relationships                                                | `model-instances.schema.json`   |
+| Annotation shape definitions                                                    | `ramen-annotations.schema.json` |
+| A single model in the underlying RAMEN Model Format (RMF)                       | `model.schema.json`             |
+| An RMF model together with the models it builds on                              | `model-file.schema.json`        |
+
+For most RAMEN workflows, use the project schema while editing a model, the RAMEN file schema when exchanging it, and the instance schema for recorded data. The annotation schema describes shape definitions, not individual recorded annotations.
+
+### A single model or an exchange file?
+
+A **model level** contains the declarations made in one model. It can import other models and refine their types. For example, a project model can import the RAMEN reference model and declare `Letter` and `Person`.
+
+An **exchange file** includes the project model and the models it builds on, also called its predecessors. This lets another tool load their declarations together. The file preserves which model originally declared each element.
+
+### Models and recorded data
+
+A project model defines types such as `Person` and the properties they may have. Recorded data contains individual people and their property values. Use the instance graph schema for those recorded nodes and relationships.
+
+## Download schemas
+
+These files are exported from `@ramen-suite/core`. Each download uses the canonical URL in the schema's `$id`. The same files are available in the package at `@ramen-suite/core/schemas/<filename>`.
+
+<table>
+  <thead>
+    <tr>
+      <th scope="col">Schema</th>
+      <th scope="col">Package filename</th>
+    </tr>
+  </thead>
+  <tbody>
+    {specification.schemas.map(({ filename, path, title }) => (
+      <tr key={path}>
+        <td>
+          <a href={path}>{title}</a>
+        </td>
+        <td>
+          <code>{filename}</code>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
+## Schema identifiers
+
+A schema's `$id` identifies that schema. A document's `$schema` identifies the schema used to describe its format.
+
+For example, this fragment selects the RAMEN project schema. The remaining required project fields are omitted here.
+
+<CodeBlock language="json">
+  {JSON.stringify(
+    {
+      $schema: specification.schemas.find(({ filename }) => filename === "ramen-project.schema.json").id,
+    },
+    null,
+    2,
+  )}
+</CodeBlock>
+
+See [validation](/specification/validation) for the checks applied to these documents and how versions are handled.
+
+## Element IDs and references
+
+Within a model, `id` identifies a model element. References use these IDs to connect definitions, for example when a node type inherits from another type. A reference into an imported model can use the qualified form `modelId:elementId`. Keep these IDs stable when exchanging or updating a model.
+
+Recorded data has its own node and relationship IDs. A recorded node's `typeId` points to its modelled type. A recorded relationship's `fromId` and `toId` point to the recorded nodes it connects. Properties such as RAMEN's `uuid` are carried in the node's `properties` object.
+
+The schemas linked above define the exact fields and accepted ID syntax. For a complete project built through the API, see the [Core correspondence example](https://ramen-suite.github.io/ramen-core/guides/examples/correspondence-edition.html).

@@ -1,0 +1,124 @@
+---
+title: Reference model
+description: RAMEN base node types, relationships, and project-specific refinements.
+---
+
+import specification from "@site/.generated/specifications.json";
+import Figure from "@site/src/components/Figure";
+
+# Reference model
+
+The RAMEN reference model defines the shared node types and relationships that projects build on. A **node** represents an object in your data. A **relationship** connects two nodes.
+
+## Base node types
+
+| Type         | Purpose                                                                    | Example of a project type    |
+| ------------ | -------------------------------------------------------------------------- | ---------------------------- |
+| `Collection` | Organises content and other collections.                                   | `Letter`                     |
+| `Content`    | Carries or references material, such as text or an image.                  | `Text`                       |
+| `Annotation` | Records a description, interpretation, or reference attached to an object. | The shared `Annotation` type |
+| `Entity`     | Represents an identifiable person, place, or other object of interest.     | `Person`                     |
+
+### Inherited properties
+
+The base types provide these properties. Project types inherit them and can add their own.
+
+| Property   | Available on              | Requirement                                                       |
+| ---------- | ------------------------- | ----------------------------------------------------------------- |
+| `uuid`     | All four base types       | One UUID that serves as the record's key.                         |
+| `label`    | `Collection` and `Entity` | One human-readable name.                                          |
+| `type`     | `Annotation`              | One name selecting a project-declared annotation shape.           |
+| `selector` | `Annotation`              | An optional object identifying the annotated part of the content. |
+
+Projects define content properties such as `text` or `url`; the base `Content` type does not prescribe them.
+
+## Relationships
+
+Relationship direction matters. Read each example from the source on the left to the target on the right.
+
+| Relationship     | Meaning                                             | Example                               |
+| ---------------- | --------------------------------------------------- | ------------------------------------- |
+| `PART_OF`        | Places content or a collection within a collection. | A `Text` is part of a `Letter`.       |
+| `HAS_ANNOTATION` | Attaches an annotation to an object.                | A `Text` has an `Annotation`.         |
+| `REFERS_TO`      | Connects an annotation to the object it refers to.  | An `Annotation` refers to a `Person`. |
+
+All four base types can have annotations through `HAS_ANNOTATION`. An annotation can `REFERS_TO` a collection, content item, or entity. A project explicitly declares which relationships its types may use.
+
+## Refining the model for a project
+
+**Refinement** specialises an existing type. For example, a project can define `Letter` as a refinement of `Collection`. It inherits the properties of `Collection` and can add project-specific properties.
+
+A project can also use a base type directly. It can keep `Annotation` and declare an **annotation shape** for each kind of annotation it records. A shape defines additional properties and the relationships available to that kind of annotation.
+
+For example, a project can declare a `persName` shape for name occurrences in a text and require each annotation of that shape to refer to one `Person`. See [content annotation examples](/concepts/content).
+
+## Properties and constraints
+
+Properties describe individual objects. A property definition specifies its name, data type, and permitted number of values. For example, a project can give `Letter` a required `title` of type `String`.
+
+| Definition | Meaning                                                                                                                          |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Data type  | The kind of value, such as `String`, `Boolean`, `Integer`, `Float`, or `Object`.                                                 |
+| Bounds     | The minimum and maximum number of values or connections.                                                                         |
+| Key        | A required, single value that uniquely identifies a record within the declaring type and its refinements in the validated graph. |
+| Constraint | An additional rule, such as a pattern or a date format.                                                                          |
+
+The reference model also provides string-based data types with predefined constraints, including `URI` for absolute URIs and `DateTime` for dates and times with a timezone. Projects can use these types without declaring them again.
+
+Bounds are written as `lowerBound` and `upperBound`. A required single value uses `1` and `1`; an optional single value uses `0` and `1`. An upper bound of `-1` sets no maximum; the lower bound still applies.
+
+Constraints restrict the values a property accepts. For example, a project can require a non-empty title, an identifier matching a pattern, or a score between `0` and `1`. See [validation](/specification/validation#property-values) for examples and the [Core constraint guide](https://ramen-suite.github.io/ramen-core/guides/rmf/constraint-languages.html) for supported rule languages.
+
+## Annotation shapes and selectors
+
+An **annotation shape** defines the additional properties and permitted connections for one kind of annotation. The annotation's `type` selects that shape; its `typeId` identifies the node type, such as the shared `Annotation` type.
+
+A **selector** identifies a part of the annotated content. RAMEN uses the selector pattern from the W3C Web Annotation Data Model. A `TextPositionSelector` with `start: 0` and `end: 5` selects “Gaius” at the start of “Gaius wrote.” The start is included and the end is excluded. [W3C selector definitions](https://www.w3.org/TR/annotation-model/#selectors).
+
+<Figure
+  id="fig:annotation-reference"
+  number="1"
+  src="/images/specification/annotation-reference.svg"
+  alt="Text contains Gaius wrote, with Gaius selected. HAS_ANNOTATION connects the text to a persName annotation with a TextPositionSelector from 0 to 5. REFERS_TO connects the annotation to the Person Gaius van B."
+  caption="The selector locates the name in the text; the reference identifies the person."
+  width={700}
+  minWidth={600}
+/>
+
+A selector object must declare a non-empty `type`. Core checks this requirement; the consuming tool checks and interprets selector-specific fields such as `start` and `end`. Project constraints can add further checks. See the Core guides for [annotation shapes](https://ramen-suite.github.io/ramen-core/guides/ramen/annotations.html) and [selectors](https://ramen-suite.github.io/ramen-core/guides/ramen/selectors.html).
+
+## Model metadata
+
+The `ext` objects in model and annotation-shape definitions hold metadata such as tool settings or mappings to external vocabularies. For example, a project can document how its [provenance properties](/concepts/related-standards#provenance) correspond to W3C lifecycle terms. Tools should identify their own entries to avoid naming conflicts.
+
+Core preserves `ext` without assigning it model semantics. An extension does not declare instance properties or add validation rules. Properties that belong to validated data must be declared in the model or annotation shape. Tool metadata stored separately from that data remains the tool's responsibility; an underscore prefix does not exempt a property from validation.
+
+## Model levels
+
+Projects can build on a model that already specialises RAMEN. Each level imports the model it builds on and declares its own refinements. This allows several projects to share definitions and add the details they need.
+
+For example, a shared correspondence model can refine `Collection` into `Letter`. A project can then refine `Letter` into `ResearchLetter`. This type inherits the properties of `Letter` and `Collection`. An individual letter recorded in the project is an instance of its modelled type. See [models and recorded data](/specification/json-schemas#models-and-recorded-data).
+
+## Restricting relationships
+
+A project model defines which node types may be connected and how many connections are allowed. These limits are called **cardinalities**. For example, a project can define `Witness` as a refinement of `Collection` and require each witness to be part of exactly one `Letter`.
+
+Each end of a relationship has its own bounds. For `Witness PART_OF Letter`, `to.bounds` counts letters per witness, while `from.bounds` counts witnesses per letter. Requiring one letter per witness does not limit how many witnesses a letter can have.
+
+<Figure
+  id="fig:relationship-bounds"
+  number="2"
+  src="/images/specification/relationship-bounds.svg"
+  alt="Witness PART_OF Letter. from.bounds 0..* counts witnesses per letter; to.bounds 1..1 counts letters per witness."
+  caption="In this project rule, each witness belongs to exactly one letter. A letter can have zero or more witnesses."
+  width={700}
+  minWidth={600}
+/>
+
+Inherited relationship definitions can be refined and their bounds narrowed. See [validation](/specification/validation) for how these rules are checked.
+
+## Download and use the reference model
+
+The <a href={specification.referenceModel}>RAMEN reference model JSON file</a> contains the machine-readable definitions. RAMEN Core exports the same model as `RAMEN_MODEL` from `@ramen-suite/core/ramen`.
+
+The [Core modelling guide](https://ramen-suite.github.io/ramen-core/guides/ramen/overview.html) explains how to create project models in code.
