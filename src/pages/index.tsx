@@ -7,7 +7,7 @@ import styles from './index.module.css';
 
 export default function Home(): ReactNode {
   return (
-    <Layout description="RAMEN is a shared model for digital scholarly editions. Define how sources, annotations, and entities connect, and use your project model across editorial tools.">
+    <Layout description="RAMEN connects content, collections, annotations, and entities in a shared model for digital scholarly editions, adapted to each project's needs.">
       <main>
         <header className={`hero-banner ${styles.hero}`}>
           <div className="container">

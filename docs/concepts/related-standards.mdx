@@ -45,7 +45,13 @@ For annotations, projects can use these terms from the [W3C Web Annotation Data 
 
 Declare shared properties on a refinement of the relevant base type. For example, `EditorialAnnotation` can provide provenance properties for annotations, and `Transcription` for transcribed content. Properties needed only by particular annotation kinds can be declared in their shapes. Optional bounds allow records without provenance, including older imports.
 
-Tools should set these values when creating or changing records and preserve existing attribution on import. This requires explicit tool support. Mappings for other property names can be documented in [`ext`](/specification/reference-model#model-metadata); Core does not interpret them.
+Tools can set provenance values when creating or changing records and should preserve existing attribution on import. This requires explicit tool support.
+
+:::info[Explicit provenance mapping]
+
+Names such as `creator` and `created` do not make properties provenance fields. Tools should require an explicit mapping before setting their values automatically. How this mapping is configured depends on the tool.
+
+:::
 
 `REFERS_TO` identifies an annotation's subject, so it should not record authorship. W3C's `generator` and `generated` describe the production of a serialisation, such as an export, rather than the annotation's original creation.
 

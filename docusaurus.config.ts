@@ -57,12 +57,11 @@ const config: Config = {
       {
         name: 'description',
         content:
-          'RAMEN Schema documents the Reusable Abstraction Model for Editorial Needs, a reusable conceptual model for structuring heterogeneous data in digital scholarly editions.',
+          "RAMEN connects content, collections, annotations, and entities in a shared model for digital scholarly editions, adapted to each project's needs.",
       },
       {
         name: 'keywords',
-        content:
-          'RAMEN, RAMEN Schema, Digital Editions, Digital Scholarly Editing, Digital Humanities, Graph-Based Modelling, Editorial Data',
+        content: 'RAMEN, digital scholarly editions, editorial data, annotations, project models, validation',
       },
     ],
 
