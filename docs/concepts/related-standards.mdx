@@ -31,7 +31,9 @@ The annotation structures differ. W3C annotations have targets and optional bodi
 
 ## Provenance
 
-Projects declare the provenance properties they need. For annotations, projects can use these terms from the [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/#lifecycle-information):
+Projects can declare provenance properties for `Collection`, `Content`, `Annotation`, and `Entity` records. These can identify who transcribed a text, created a person record, or added an annotation. Their meaning should be explicit: a record's creation time differs from a historical date such as the date of a letter.
+
+For annotations, projects can use these terms from the [W3C Web Annotation Data Model](https://www.w3.org/TR/annotation-model/#lifecycle-information):
 
 | Property   | Meaning                                                           | RAMEN data type |
 | ---------- | ----------------------------------------------------------------- | --------------- |
@@ -41,9 +43,9 @@ Projects declare the provenance properties they need. For annotations, projects 
 
 `URI` and `DateTime` are supplied by the RAMEN reference model. A creator value identifies the agent by an absolute URI. For W3C exchange, timestamps must use UTC ending in `Z`; RAMEN's `DateTime` also accepts other timezone offsets.
 
-Declare shared properties on a refinement of `Annotation`, such as `EditorialAnnotation`, and use it for the relevant records. Properties needed only by particular annotation kinds can be declared in their shapes. Optional bounds allow records without provenance, including older imports.
+Declare shared properties on a refinement of the relevant base type. For example, `EditorialAnnotation` can provide provenance properties for annotations, and `Transcription` for transcribed content. Properties needed only by particular annotation kinds can be declared in their shapes. Optional bounds allow records without provenance, including older imports.
 
-Tools should set these values when creating or changing annotations and preserve existing attribution on import. This requires explicit tool support. Mappings for other property names can be documented in [`ext`](/specification/reference-model#model-metadata); Core does not interpret them.
+Tools should set these values when creating or changing records and preserve existing attribution on import. This requires explicit tool support. Mappings for other property names can be documented in [`ext`](/specification/reference-model#model-metadata); Core does not interpret them.
 
 `REFERS_TO` identifies an annotation's subject, so it should not record authorship. W3C's `generator` and `generated` describe the production of a serialisation, such as an export, rather than the annotation's original creation.
 
