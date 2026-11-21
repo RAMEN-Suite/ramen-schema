@@ -1,9 +1,11 @@
 @font-face {
   font-family: "Roboto Flex";
-  src: url("/fonts/RobotoFlex.ttf") format("truetype");
+  /* Keep the static URL aligned with the preload in docusaurus.config.ts. */
+  /* webpackIgnore: true */
+  src: url("/fonts/RobotoFlex.woff2") format("woff2");
   font-weight: 100 1000;
   font-style: normal;
-  font-display: optional;
+  font-display: swap;
 }
 
 :root {

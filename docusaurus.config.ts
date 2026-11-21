@@ -10,7 +10,7 @@ const config: Config = {
   headTags: [
     {
       tagName: 'link',
-      attributes: { rel: 'preload', href: '/fonts/RobotoFlex.ttf', as: 'font', type: 'font/ttf', crossorigin: 'anonymous' },
+      attributes: { rel: 'preload', href: '/fonts/RobotoFlex.woff2', as: 'font', type: 'font/woff2', crossorigin: 'anonymous' },
     },
   ],
 
