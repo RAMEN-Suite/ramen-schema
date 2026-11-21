@@ -1,16 +1,53 @@
 /* Hero graph background */
 
-.hero-banner::before {
+.hero-banner {
+  --graph-position-a:
+    0% 20%, 100% 0%, 20% 100%, 80% 30%, 0% 80%, 100% 50%, 30% 0%, 70% 100%, 20% 60%, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+  --graph-position-b:
+    100% 80%, 0% 100%, 80% 0%, 20% 70%, 100% 20%, 0% 50%, 70% 100%, 30% 0%, 80% 40%, 100% 0, 80% 100%, 100% 50%, 70% 0, 100% 100%,
+    90% 50%;
+}
+
+.hero-banner::before,
+.hero-banner::after {
   content: "";
   position: absolute;
   top: -18%;
   bottom: -18%;
-  left: 0;
   z-index: -3;
   width: min(40vw, 38rem);
   opacity: 0.47;
   pointer-events: none;
-  background:
+  background-size:
+    110% 110%,
+    110% 110%,
+    110% 110%,
+    110% 110%,
+    110% 110%,
+    110% 110%,
+    110% 110%,
+    110% 110%,
+    110% 110%,
+    130% 130%,
+    140% 140%,
+    150% 150%,
+    135% 135%,
+    145% 145%,
+    155% 155%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  animation:
+    graph-field var(--graph-duration) ease-in-out infinite alternate,
+    graph-appear 760ms 360ms ease-out backwards;
+}
+
+.hero-banner::before {
+  --graph-duration: 16s;
+  --graph-start: var(--graph-position-a);
+  --graph-end: var(--graph-position-b);
+  --graph-drift: 1rem, 0.75rem, 0;
+  left: -1rem;
+  background-image:
     radial-gradient(circle at 10% 18%, var(--ramen-red) 0 0.24rem, transparent 0.29rem),
     radial-gradient(circle at 27% 11%, rgba(164, 31, 30, 0.9) 0 0.18rem, transparent 0.23rem),
     radial-gradient(circle at 43% 24%, rgba(164, 31, 30, 0.82) 0 0.28rem, transparent 0.33rem),
@@ -26,55 +63,16 @@
     linear-gradient(-18deg, transparent 0 51%, rgba(24, 20, 19, 0.16) 51.15% 51.65%, transparent 51.8%),
     linear-gradient(112deg, transparent 0 61%, rgba(24, 20, 19, 0.14) 61.15% 61.65%, transparent 61.8%),
     linear-gradient(8deg, transparent 0 72%, rgba(24, 20, 19, 0.17) 72.15% 72.65%, transparent 72.8%);
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    130% 130%,
-    140% 140%,
-    150% 150%,
-    135% 135%,
-    145% 145%,
-    155% 155%;
-  background-position:
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0;
   mask-image: linear-gradient(to right, black 0%, black 42%, transparent 100%);
-  animation:
-    graph-field-left 34s ease-in-out infinite alternate,
-    graph-appear 760ms 360ms ease-out backwards;
 }
 
 .hero-banner::after {
-  content: "";
-  position: absolute;
-  top: -18%;
-  right: 0;
-  bottom: -18%;
-  z-index: -3;
-  width: min(40vw, 38rem);
-  opacity: 0.47;
-  pointer-events: none;
-  background:
+  --graph-duration: 18s;
+  --graph-start: var(--graph-position-b);
+  --graph-end: var(--graph-position-a);
+  --graph-drift: -1rem, -0.75rem, 0;
+  right: -1rem;
+  background-image:
     radial-gradient(circle at 90% 16%, var(--ramen-red) 0 0.24rem, transparent 0.29rem),
     radial-gradient(circle at 72% 9%, rgba(164, 31, 30, 0.9) 0 0.18rem, transparent 0.23rem),
     radial-gradient(circle at 58% 27%, rgba(164, 31, 30, 0.82) 0 0.28rem, transparent 0.33rem),
@@ -90,42 +88,7 @@
     linear-gradient(18deg, transparent 0 51%, rgba(24, 20, 19, 0.16) 51.15% 51.65%, transparent 51.8%),
     linear-gradient(-112deg, transparent 0 61%, rgba(24, 20, 19, 0.14) 61.15% 61.65%, transparent 61.8%),
     linear-gradient(-8deg, transparent 0 72%, rgba(24, 20, 19, 0.17) 72.15% 72.65%, transparent 72.8%);
-  background-size:
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    100% 100%,
-    130% 130%,
-    140% 140%,
-    150% 150%,
-    135% 135%,
-    145% 145%,
-    155% 155%;
-  background-position:
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0,
-    0 0;
   mask-image: linear-gradient(to left, black 0%, black 42%, transparent 100%);
-  animation:
-    graph-field-right 34s ease-in-out infinite alternate,
-    graph-appear 760ms 360ms ease-out backwards;
 }
 
 .hero-banner .container::before,
@@ -137,6 +100,7 @@
   height: 12rem;
   opacity: 0.46;
   pointer-events: none;
+  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
   background:
     linear-gradient(24deg, transparent 0 31%, rgba(24, 20, 19, 0.24) 31.2% 31.8%, transparent 32%),
     linear-gradient(-42deg, transparent 0 44%, rgba(24, 20, 19, 0.2) 44.2% 44.8%, transparent 45%),
@@ -167,83 +131,15 @@
     graph-appear 760ms 360ms ease-out backwards;
 }
 
-@keyframes graph-field-left {
+@keyframes graph-field {
   from {
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0;
+    transform: translate3d(0, 0, 0);
+    background-position: var(--graph-start);
   }
 
   to {
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      -130% 0,
-      -140% 0,
-      -150% 0,
-      -135% 0,
-      -145% 0,
-      -155% 0;
-  }
-}
-
-@keyframes graph-field-right {
-  from {
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0;
-  }
-
-  to {
-    background-position:
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      0 0,
-      130% 0,
-      140% 0,
-      150% 0,
-      135% 0,
-      145% 0,
-      155% 0;
+    transform: translate3d(var(--graph-drift));
+    background-position: var(--graph-end);
   }
 }
 
@@ -322,5 +218,14 @@
 
   to {
     filter: opacity(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-banner::before,
+  .hero-banner::after,
+  .hero-banner .container::before,
+  .hero-banner .container::after {
+    animation: none;
   }
 }

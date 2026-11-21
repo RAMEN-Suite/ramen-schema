@@ -57,7 +57,7 @@ const config: Config = {
       {
         name: 'description',
         content:
-          "RAMEN connects content, collections, annotations, and entities in a shared model for digital scholarly editions, adapted to each project's needs.",
+          "RAMEN connects content, collections, annotations, and entities in a shared model for digital scholarship, adapted to each project's needs.",
       },
       {
         name: 'keywords',

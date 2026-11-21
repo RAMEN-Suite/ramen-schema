@@ -7,16 +7,16 @@ import styles from './index.module.css';
 
 export default function Home(): ReactNode {
   return (
-    <Layout description="RAMEN connects content, collections, annotations, and entities in a shared model for digital scholarly editions, adapted to each project's needs.">
+    <Layout description="RAMEN connects content, collections, annotations, and entities in a shared model for digital scholarship, adapted to each project's needs.">
       <main>
         <header className={`hero-banner ${styles.hero}`}>
           <div className="container">
             <Heading as="h1" className={styles.title}>
               RAMEN Schema
             </Heading>
-            <p className={styles.subtitle}>A shared model for digital scholarly editions</p>
+            <p className={styles.subtitle}>A shared model for digital scholarship</p>
             <p className={styles.description}>
-              RAMEN connects content, collections, annotations, and entities in a model that projects adapt to their editorial
+              RAMEN connects content, collections, annotations, and entities in a model that projects adapt to their research
               needs.
             </p>
             <div className={styles.actions}>
@@ -31,6 +31,7 @@ export default function Home(): ReactNode {
               </Link>
             </div>
           </div>
+          <div className={styles.heroFade} aria-hidden="true" />
         </header>
         <Cards />
       </main>

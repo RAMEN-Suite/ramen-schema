@@ -43,6 +43,7 @@
   /* Motion */
   --ramen-transition-fast: 160ms ease;
   --ramen-animation-distance: 0.75rem;
+  --ramen-animation-enter: ramen-fade-up;
 
   /* Docusaurus theme */
   --ifm-color-primary: var(--ramen-red);
@@ -54,6 +55,7 @@
   --ifm-color-primary-lightest: #a20918;
 
   --ifm-font-family-base: "Roboto Flex", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ifm-line-height-base: 1.5;
 
   --ifm-heading-font-weight: 750;
   --ifm-navbar-height: var(--ramen-navbar-height);
@@ -105,7 +107,7 @@ body {
 .navbar__brand .navbar__title {
   flex: none;
   color: var(--ramen-red);
-  font-family: var(--ifm-font-family-base);
+  font-family: var(--ifm-font-family-base), serif;
   font-size: clamp(0.76rem, 1.2vw, 0.95rem);
   font-weight: 750;
   letter-spacing: 0.085em;
@@ -573,10 +575,6 @@ code {
 
   .navbar__inner .navbar__brand {
     display: none;
-  }
-
-  .theme-doc-sidebar-container {
-    padding-right: 0;
   }
 
   .theme-doc-sidebar-container .theme-doc-sidebar-menu {
